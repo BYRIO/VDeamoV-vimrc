@@ -20,13 +20,15 @@
     Plugin 'xuhdev/vim-latex-live-preview' 
     "Github
     Plugin 'tpope/vim-fugitive'
-    
+    "Debuge For PHP,Pyton,Perl,Ruby,Tcl and NodeJS,etc
+    Plugin 'joonty/vdebug'
+
     "FileManage
     Plugin 'scrooloose/nerdtree'
     Plugin 'ctrlpvim/ctrlp.vim'
     Plugin 'FelikZ/ctrlp-py-matcher' "Only this enable ,can ctrlp work
     "Plugin 'airblade/vim-gitgutter'
-
+   
     "Brackets Jump 智能补全括号和跳转
     Plugin 'Raimondi/delimitMate' "补全括号 shift+tab出来
     Plugin 'vim-scripts/matchit.zip' " %  g% [% ]% a%
@@ -422,7 +424,7 @@
     set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
 
-    let g:syntastic_check_on_open=1
+    let g:syntastic_check_on_open=0
     let g:syntastic_always_populate_loc_list=0
     let g:syntastic_auto_loc_list=1
     let g:syntastic_check_on_wq=0

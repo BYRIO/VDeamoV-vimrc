@@ -49,8 +49,9 @@ if [typein=""]; then
 	#cp to ~/.vimrc
 	cp ~/tmp/vimrc/vimrc ~/.vimrc;
 	#vundle
-	[[ -d ~/.vim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim;
-
+  [[ -d ~/.vim/bundle/Vundle.vim ]] || git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim;
+  [[ -d ~/.vim/autoload ]] || mkdir ~/.vim/autoload;
+  curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 	#color schemes
 	cd ~/tmp;
 	[[ -d ~/tmp/vim-colorschemes ]] || git clone https://github.com/flazz/vim-colorschemes.git;
