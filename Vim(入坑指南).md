@@ -24,9 +24,9 @@
 ```Bash
 brew info vim //查看可选选项
 brew install python2
-brew install vim --with-client-server --with-lua --with-luajit 
+brew install vim --with-lua --with-luajit 
 //lua和python分别是一些插件的必备条件
-//client-server也是必须的，好多插件要用，这个直接编辑源码目前mac是做不到的，linux随意
+
 ```
 
 ```bash
