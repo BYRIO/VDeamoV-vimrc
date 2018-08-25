@@ -3,7 +3,7 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 "vim-go | go settings `go get -u github.com/golang/lint`
-"set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
 call vundle#begin()
 "{plugins
 
@@ -912,6 +912,8 @@ function!  ToggleBG()
     set background=light
   endif
 endfunction
+" set background is dark at the startup
+set background=dark
 noremap <leader>bg :call ToggleBG()<CR>
 
 "CompileConfig
