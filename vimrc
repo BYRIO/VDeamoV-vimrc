@@ -56,6 +56,7 @@ Plugin 'rking/ag.vim'
 Plugin 'dyng/ctrlsf.vim'
 
 
+
 "Brackets Jump 智能补全括号和跳转
 Plugin 'Raimondi/delimitMate' "补全括号 shift+tab出来
 Plugin 'vim-scripts/matchit.zip' " %  g% [% ]% a%
@@ -78,8 +79,7 @@ Plugin 'Valloric/YouCompleteMe'
 
 "Snippet 智能输入
 Plugin 'SirVer/ultisnips'
-"Plugin 'honza/vim-snippets'
-Plugin 'VDeamoV/vim-snippets'
+Plugin 'honza/vim-snippets'
 Plugin 'Shougo/deoplete.nvim'
 if !has('nvim')
   Plugin 'roxma/nvim-yarp'
@@ -416,6 +416,7 @@ nnoremap <leader>tq :tabclose<cr>
 "}
 
 "{Plugin settings
+
 "autoPep
 autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
 
