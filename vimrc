@@ -10,6 +10,9 @@ call vundle#begin()
 "Python 自动pep8风格
 Plugin 'tell-k/vim-autopep8' "need to install autopep
 
+"Cpp Plugin
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
 "Markdowm
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -50,6 +53,7 @@ Plugin 'Chun-Yang/vim-action-ag'
 Plugin 'airblade/vim-gitgutter'
 "Plugin 'mhinz/vim-grepper'
 Plugin 'rking/ag.vim'
+Plugin 'dyng/ctrlsf.vim'
 
 
 "Brackets Jump 智能补全括号和跳转
@@ -100,11 +104,13 @@ Plugin 'editorconfig/editorconfig-vim'
 
 "Coding Reading 阅读代码的插件
 Plugin 'majutsushi/tagbar'
+"Plugin 'Lokaltog/vim-powerline'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'Yggdroot/indentLine' "缩进的虚线
 Plugin 'bling/vim-bufferline' "为打开的文件有一个快捷栏
+Plugin 'kshenoy/vim-signature' "书签可视化
 
 "Coding Highlight
 "Plugin 'tomlion/vim-solidity'
@@ -121,7 +127,6 @@ Plugin 'bling/vim-bufferline' "为打开的文件有一个快捷栏
 
 "Plugin 'godlygeek/tabular'
 "Plugin 'itchyny/calendar.vim'
-"Plugin 'kshenoy/vim-signature'
 "Plugin 'juneedahamed/svnj.vim'
 "Plugin 'michalliu/jsruntime.vim'
 "Plugin 'michalliu/sourcebeautify.vim'
@@ -156,7 +161,6 @@ Plugin 'bling/vim-bufferline' "为打开的文件有一个快捷栏
 "Plugin 'jdkanani/vim-material-theme'
 "Plugin 'kristijanhusak/vim-hybrid-material'
 "Plugin 'google/vim-colorscheme-primary'
-"Plugin 'terryma/vim-multiple-cursors'
 "Plugin 'tpope/vim-haml'
 "Plugin 'gregsexton/git/'
 "Plugin 'Lokaltog/vim-easymotion'
@@ -336,7 +340,18 @@ highlight CursorColumn term=reverse
 "}
 
 "{Mappings
-let mapleader=','
+let mapleader=';'
+
+" 定义移动到行首行尾
+nmap LB 0
+nmap LE $
+
+"窗口跳转
+"向右，向左,向上，向下
+nnoremap <Leader>lw <C-W>l
+nnoremap <Leader>hw <C-W>h
+nnoremap <Leader>kw <C-W>k
+nnoremap <Leader>jw <C-W>j
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
@@ -550,6 +565,9 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'default'
 
+"Tagbar
+"
+nmap <F8> :TagbarToggle<CR>
 "scrooloose/nerdtree
 nnoremap <leader>ne :NERDTreeFind<CR>
 nnoremap <leader>nt :NERDTreeToggle<CR>
@@ -623,7 +641,6 @@ let g:ycm_seed_identifiers_with_syntax=1                " 开启 YCM 基于语�
 let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0 " 注释和字符串中的文字也会被收入补全
-
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "跳转到定义处
@@ -775,6 +792,7 @@ let g:indentLine_enabled=1
 " Set tabstop, softtabstop and shiftwidth to the same value
 command! -nargs=* Stab call Stab()
 function! Stab()
+"设置缩进
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
   if l:tabstop > 0
     let &l:sts = l:tabstop
@@ -785,6 +803,7 @@ function! Stab()
 endfunction
 
 function! SummarizeTabs()
+"查看当前的锁紧情况
   try
     echohl ModeMsg
     echon 'tabstop='.&l:ts
