@@ -103,6 +103,7 @@ Plug 'w0rp/ale' "代替syntastic的选择
 "Commenter 智能注释
 Plug 'ddollar/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-commentary'
 
 
 "Coding Reading 阅读代码的插件
@@ -598,25 +599,27 @@ let g:ycm_filetype_blacklist = {
             \ 'infolog' : 1,
             \ 'mail' : 1
             \}
-let g:ycm_semantic_triggers = {
-\   'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-\   'cs,lua,javascript': ['re!\w{2}'],
-\}
-"let g:ycm_semantic_triggers =  {
-            "\ 'c' : ['->', '.'],
-            "\ 'objc' : ['->', '.'],
-            "\ 'ocaml' : ['.', '#'],
-            "\ 'cpp,objcpp' : ['->', '.', '::'],
-            "\ 'perl' : ['->'],
-            "\ 'php' : ['->', '::'],
-            "\ 'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            "\ 'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-            "\ 'ruby' : ['.', '::'],
-            "\ 'lua' : ['.', ':'],
-            "\ 'erlang' : [':'],
-            "\ 'css': ['re!^\s{4}', 're!:\s+'],
-            "\ 'html': ['</'],
-            "\}
+
+"let g:ycm_semantic_triggers = {
+"\   'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+"\   'cs,lua,javascript': ['re!\w{2}'],
+"\}
+
+let g:ycm_semantic_triggers =  {
+            \ 'c' : ['->', '.'],
+            \ 'objc' : ['->', '.'],
+            \ 'ocaml' : ['.', '#'],
+            \ 'cpp,objcpp' : ['->', '.', '::'],
+            \ 'perl' : ['->'],
+            \ 'php' : ['->', '::'],
+            \ 'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \ 'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+            \ 'ruby' : ['.', '::'],
+            \ 'lua' : ['.', ':'],
+            \ 'erlang' : [':'],
+            \ 'css': ['re!^\s{4}', 're!:\s+'],
+            \ 'html': ['</'],
+            \}
 
 "neosnippet
 "disables all runtime snippets
