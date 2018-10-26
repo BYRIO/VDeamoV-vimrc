@@ -21,13 +21,13 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 "Markdowm
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'mzlogin/vim-kramdown-tab' "fix for kramdown
+Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
+Plug 'mzlogin/vim-kramdown-tab', {'for': ['markdown']} "fix for kramdown
 "Use <leader>tab to use
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 ":GenTocGFM/:GenTocRedcarpet
 ":UpdateToc 更新目录
-Plug 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown']}
 "<leader>tm to enable
 "|| in the insert mode to create a horizontal line
 "| match the | up row
@@ -35,13 +35,16 @@ Plug 'dhruvasagar/vim-table-mode'
 "<leader>tdc to delete the coloum
 "<leader>tt to change the exist text to format table
 
+"Opengl
+Plug 'tikhomirov/vim-glsl', {'for':['swift']}
+"vim: set ft=glsl:
 
 "Blog
 Plug 'tpope/vim-liquid'
 "Swift
-Plug 'keith/swift.vim'
+Plug 'keith/swift.vim',{'for':['swift']}
 "go
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go',{'for': ['go']}
 
 
 "Compile
@@ -49,7 +52,7 @@ Plug 'fatih/vim-go'
 "solidity Type:make from a .sol file
 "Plug 'groenewege/vim-less'
 "js extend less,need install less npm install less
-Plug 'xuhdev/vim-latex-live-preview'
+Plug 'xuhdev/vim-latex-live-preview',{'for': ['latex']}
 "Github
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim' "编译C++
@@ -66,7 +69,6 @@ Plug 'kristijanhusak/vim-dirvish-git'
 
 
 "search
-Plug 'Chun-Yang/vim-action-ag'
 Plug 'mhinz/vim-signify' "代替gitgutter
 "Plug 'mhinz/vim-grepper'
 Plug 'dyng/ctrlsf.vim'
@@ -77,7 +79,6 @@ Plug 'rizzatti/dash.vim'
 Plug 'Raimondi/delimitMate' "补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip' " %  g% [% ]% a%
 Plug 'tpope/vim-surround'
-
 
 "代码补全
 "TagsGenerator
@@ -101,7 +102,7 @@ Plug 'w0rp/ale' "代替syntastic的选择
 
 
 "Commenter 智能注释
-Plug 'ddollar/nerdcommenter'
+"Plug 'ddollar/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 
@@ -117,6 +118,8 @@ Plug 'bling/vim-bufferline' "为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature' "书签可视化
 Plug 'tmhedberg/simpylfold'
 
+"Other Setting
+Plug 'vim-scripts/LargeFile'
 "}Initialize Plug system
 call plug#end()
 
@@ -131,7 +134,7 @@ set relativenumber
 "show relative line number
 set fileformats=unix,dos,mac
 set hlsearch
-set incsearch
+set incsearch " Shows the match while typing
 set ignorecase
 set smartcase
 set encoding=utf-8
@@ -179,7 +182,7 @@ if !&sidescrolloff
     set scrolloff=5
 endif
 set display+=lastline
-set nowrap      " Do not wrap long lines
+" set nowrap      " Do not wrap long lines
 set backspace=eol,start,indent
 if has('syntax')
     syntax enable
@@ -235,8 +238,8 @@ if gitroot != ''
 endif
 
 " colorscheme Tomorrow-Night
-"colorscheme PaperColor
-colorscheme hybrid_material
+colorscheme PaperColor
+"colorscheme hybrid_material
 "colorscheme anderson
 
 set t_Co=256
@@ -282,12 +285,11 @@ nnoremap <leader>l :set list!<CR>
 nnoremap <leader>ll :set conceallevel=0
 nnoremap <leader>lc :set conceallevel=1
 "show the $ in the end of the line
-nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
 "noremap <Leader>W :w !sudo tee % > /dev/null
 " Quickly edit/reload the vimrc file
 nnoremap <leader>ev :tabe $MYVIMRC<CR>
 "fast find vimrc
+autocmd! BufWritePost .vimrc source ~/.vimrc
 
 "nnoremap <space> za
 "vnoremap <space> zf
@@ -342,6 +344,7 @@ nmap . .`[
 "}
 
 "{Plug settings
+
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
@@ -403,8 +406,10 @@ let g:ale_linters = {
 \   'python': ['pylint'],
 \   'latex': ['lacheck'],
 \   'swift': ['swiftlint'],
-\   'vim':  ['vint'],
-\   'markdown': ['markdownlint']
+\   'markdown': ['markdownlint'],
+\   'cpp': ['gcc', 'cpplint'],
+\   'c': ['gcc', 'cpplint'],
+\   'java': ['javac','google-java-format'],
 \}
 
 
@@ -423,10 +428,10 @@ let g:asyncrun_open = 6
 let g:asyncrun_bell = 1
 let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml']
 nnoremap <F10> : call asyncrun#quickfix_toggle(6)<CR>
-nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
-nnoremap <silent> <F8> :AsyncRun -cwd=<root> -mode=4 make run <CR>
-nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <CR>
-nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
+" nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
+" nnoremap <silent> <F8> :AsyncRun -cwd=<root> -mode=4 make run <CR>
+" nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <CR>
+" nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
 
 "pangu.vim
 autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
@@ -677,12 +682,6 @@ let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 0
 au FileType go set expandtab
 
-"vim-action-ag
-" use * to search current word in normal mode
-nmap * <Plug>AgActionWord
-" use * to search selected text in visual mode
-vmap * <Plug>AgActionVisual
-
 "Yggdroot/indentLine
 let g:indentLine_enabled=1
 "let g:indentLine_conceallevel=0
@@ -701,6 +700,7 @@ let g:indentLine_enabled=1
 " Set tabstop, softtabstop and shiftwidth to the same value
 command! -nargs=1 Rename let tpname = expand('%:t') | saveas <args> | edit <args> | call delete(expand(tpname))
 command! -nargs=* Stab call Stab()
+
 function! Stab()
     "设置缩进
     let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
@@ -713,7 +713,7 @@ function! Stab()
 endfunction
 
 function! SummarizeTabs()
-    "查看当前的锁紧情况
+    "查看当前的缩进情况
     try
         echohl ModeMsg
         echon 'tabstop='.&l:ts
@@ -759,13 +759,14 @@ function! GuiTabLabel()
     let wincount = tabpagewinnr(v:lnum, '$')
     return label . '  [' . wincount . ']'
 endfunction
+
 function! SetTabLabel()
     set guitablabel=%{GuiTabLabel()}
 endfunction
 
 " http://vimdoc.sourceforge.net/htmldoc/gui.html
 "echom "May The FORCE be with U!"
-if exists("+showtabline")
+if exists('+showtabline')
     function! MyTabLine()
         let s = ''
         let t = tabpagenr()
@@ -820,8 +821,8 @@ set guitabtooltip=%{GuiTabToolTip()}
 function! Preserve(command)
     " Preparation: save last search, and cursor position.
     let _s=@/
-    let l = line(".")
-    let c = col(".")
+    let l = line('.')
+    let c = col('.')
     " Do the business:
     execute a:command
     " Clean up: restore previous search history, and cursor position
@@ -854,7 +855,6 @@ func! CompileRun()
         exec "!g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'cpp'
-        exec "!clear"
         exec "!g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
@@ -863,7 +863,7 @@ func! CompileRun()
         exec "!time java %<"
     elseif &filetype == 'sh'
         exec "!clear"
-        :!time bash %
+        exec ":!time bash %"
     elseif &filetype == 'python'
         exec "!clear"
         exec "!time python3 %"
@@ -891,6 +891,8 @@ autocmd BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \   exe "normal! g`\"" |
             \ endif
+autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
+autocmd! BufRead,BufNewFile *.swift set filetype=swift
 autocmd! BufRead,BufNewFile *.markdown set filetype=markdown
 autocmd! BufRead,BufNewFile *.md       set filetype=markdown
 autocmd! BufRead,BufNewFile,BufReadPost *.snippets set filetype=snippets
