@@ -52,7 +52,7 @@ Plug 'fatih/vim-go',{'for': ['go']}
 "solidity Type:make from a .sol file
 "Plug 'groenewege/vim-less'
 "js extend less,need install less npm install less
-Plug 'xuhdev/vim-latex-live-preview',{'for': ['latex']}
+Plug 'xuhdev/vim-latex-live-preview'
 "Github
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim' "编译C++
@@ -851,11 +851,10 @@ map <leader>r :call CompileRun()<CR>
 func! CompileRun()
     exec "w"
     if &filetype == 'c'
-        exec "!clear"
-        exec "!g++ % -o %<"
+        exec "!clear && g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'cpp'
-        exec "!g++ % -o %<"
+        exec "!clear && g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
         exec "!clear"
@@ -863,10 +862,10 @@ func! CompileRun()
         exec "!time java %<"
     elseif &filetype == 'sh'
         exec "!clear"
-        exec ":!time bash %"
+        exec "!time bash %"
     elseif &filetype == 'python'
-        exec "!clear"
-        exec "!time python3 %"
+        exec "!clear && python3 %"
+
     elseif &filetype == 'html'
         exec "!open -a Safari % &"
     elseif &filetype == 'go'

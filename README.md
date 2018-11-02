@@ -1,4 +1,6 @@
-#Welcome to Myvimrc
+Welcome to MyVimrc
+==================
+
 
 Thx for using
 
