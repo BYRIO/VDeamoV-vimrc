@@ -1,12 +1,10 @@
 filetype off
-"vim-go | go settings `go get -u github.com/golang/lint`
-set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
 
 call plug#begin('~/.vim/plugged')
 "{Plugstall with Plug
 
 "AutoFix Sytle
-Plug 'hotoo/pangu.vim' "to make your document better
+Plug 'hotoo/pangu.vim', {'for': ['markdown']} "to make your document better
 
 "textobj
 Plug 'kana/vim-textobj-user'
@@ -16,11 +14,11 @@ Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] 
 Plug 'sgur/vim-textobj-parameter'
 
 "Cpp Plug
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 
 
 "Markdowm
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular', {'for': ['markdown']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
 Plug 'mzlogin/vim-kramdown-tab', {'for': ['markdown']} "fix for kramdown
 "Use <leader>tab to use
@@ -35,24 +33,17 @@ Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown']}
 "<leader>tdc to delete the coloum
 "<leader>tt to change the exist text to format table
 
-"Opengl
-Plug 'tikhomirov/vim-glsl', {'for':['swift']}
-"vim: set ft=glsl:
-
 "Blog
 Plug 'tpope/vim-liquid'
 "Swift
 Plug 'keith/swift.vim',{'for':['swift']}
-"go
-Plug 'fatih/vim-go',{'for': ['go']}
-
 
 "Compile
 "Plug 'dmdque/solidity.vim'
 "solidity Type:make from a .sol file
 "Plug 'groenewege/vim-less'
 "js extend less,need install less npm install less
-Plug 'xuhdev/vim-latex-live-preview'
+Plug 'xuhdev/vim-latex-live-preview', {'for': ['latex']}
 "Github
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim' "编译C++
@@ -78,31 +69,30 @@ Plug 'rizzatti/dash.vim'
 "Brackets Jump 智能补全括号和跳转
 Plug 'Raimondi/delimitMate' "补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip' " %  g% [% ]% a%
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 
 "代码补全
 "TagsGenerator
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'Valloric/YouCompleteMe'
-"Plug 'marijnh/tern_for_vim'
+Plug 'marijnh/tern_for_vim',{ 'for' : 'javascript'}
 "增强YCM的JavaScript omnifunc
 
 
-"Snippet 智能输入
+""Snippet 智能输入
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+"Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
 
 
-"动态检查
+""动态检查
 Plug 'w0rp/ale' "代替syntastic的选择
-"Plug 'einars/js-beautify'
-"Plug 'maksimr/vim-jsbeautify'
+""Plug 'einars/js-beautify'
+""Plug 'maksimr/vim-jsbeautify'
 
 
-"Commenter 智能注释
-"Plug 'ddollar/nerdcommenter'
+""Commenter 智能注释
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 
@@ -119,7 +109,7 @@ Plug 'kshenoy/vim-signature' "书签可视化
 Plug 'tmhedberg/simpylfold'
 
 "Other Setting
-Plug 'vim-scripts/LargeFile'
+" Plug 'vim-scripts/LargeFile'
 "}Initialize Plug system
 call plug#end()
 
@@ -160,11 +150,13 @@ set tabstop=2  softtabstop=2 shiftwidth=2 expandtab
 set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 set autoread
 set wildignore=*.o,*~,*.pyc,*.swp,*.bak,*.class
+
 if has('win16') || has('win32')
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
+
 set lazyredraw      " don't update the display while executing macros
 set switchbuf=useopen           " reveal already opened files from the
 " quickfix window instead of opening new
@@ -184,9 +176,11 @@ endif
 set display+=lastline
 " set nowrap      " Do not wrap long lines
 set backspace=eol,start,indent
+
 if has('syntax')
     syntax enable
 endif
+
 set textwidth=80 "最大字符长度
 let &colorcolumn=join(range(81,999),',')
 let &colorcolumn='80,'.join(range(120,999),',')
@@ -195,11 +189,6 @@ set autoindent
 set smartindent
 set smarttab
 set ruler
-
-if has('gui_macvim')            "autocmd GUIEnter * set fullscreen
-    set fuoptions=maxvert,maxhorz
-    set transparency=10
-endif
 
 set cursorcolumn
 set cursorline
@@ -244,7 +233,7 @@ colorscheme PaperColor
 
 set t_Co=256
 set nofoldenable                  " Auto fold code
-set foldlevel=99
+" set foldlevel=99
 "set foldlevelstart=99
 set nomodeline                  " disable mode lines (security measure)
 " allow mouse select and etc operation
@@ -262,7 +251,7 @@ set wrapmargin=2 " 2 chars wrap margin from the right window border, hard wrap
 set list
 set guioptions=e "only show guitablabel
 "set guioptions=
-syntax on
+" syntax on
 highlight CursorLine term=reverse
 highlight CursorColumn term=reverse
 "}
@@ -271,8 +260,8 @@ highlight CursorColumn term=reverse
 let mapleader=','
 
 " 定义移动到行首行尾
-nmap LB ^
-nmap LE $
+nmap ZS ^
+nmap ZE $
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
@@ -325,10 +314,11 @@ nnoremap <leader>tq :tabclose<CR>
 "Tips
 nmap . .`[
 
-"nnoremap    <C-Tab>    :tabnext<CR>
+" nnoremap    <C-Tab>    :tabnext<CR>
 "imap   <C-Tab>    <C-O>:tabnext<CR>
-"map    <C-S-Tab>  :tabprev<CR>
+" map    <C-S-Tab>  :tabprev<CR>
 "imap   <C-S-Tab>  <C-O>:tabprev<CR>
+
 "Simplify help navigation
 "http://vim.wikia.com/wiki/Learn_to_use_help
 "Press Enter to jump to the subject (topic) under the cursor.
@@ -626,12 +616,6 @@ let g:ycm_semantic_triggers =  {
             \ 'html': ['</'],
             \}
 
-"neosnippet
-"disables all runtime snippets
-let g:neosnippet#disable_runtime_snippets = {
-            \ '_' : 1
-            \ }
-
 "SirVer/ultisnips
 "customize python and keymapping
 "ref:https://gist.github.com/lencioni/dff45cd3d1f0e5e23fe6
@@ -642,57 +626,12 @@ let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
-
-"moll/vim-node
-"    autocmd User Node
-            "\ if &filetype == "javascript" |
-            "\   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
-            "\   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
-            "\ endif
-
-"othree/javascript-libraries-syntax.vim
-"let g:used_javascript_libs = 'react,angularjs,flux'
-
-"pangloss/vim-javascript
-"let javascript_enable_domhtmlcss    = 1
-"let g:javascript_conceal_function   = "ƒ"
-"let g:javascript_conceal_null       = "ø"
-"let g:javascript_conceal_this       = "@"
-"let g:javascript_conceal_return     = "⇚"
-"let g:javascript_conceal_undefined  = "¿"
-"let g:javascript_conceal_NaN        = "ℕ"
-"let g:javascript_conceal_prototype  = "¶"
-"groenewege/vim-less
-"   autocmd BufNewFile,BufRead *.less set filetype=less
-"autocmd FileType less set omnifunc=csscomplete#CompleteCSS
-
 "vim-airline/vim-airline-themes
 let g:airline_theme='dark'
-
-"fatih/vim-go
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:go_fmt_command = "goimports"
-let g:go_fmt_autosave = 0
-au FileType go set expandtab
 
 "Yggdroot/indentLine
 let g:indentLine_enabled=1
 "let g:indentLine_conceallevel=0
-
-"mhinz/vim-grepper
-"" Mimic :grep and make ag the default tool.
-"let g:grepper = {
-            "\ 'tools': ['ag', 'git', 'grep'],
-            "\ 'open':  0,
-            "\ 'jump':  1,
-            "\ }
 
 "}
 
@@ -829,7 +768,7 @@ function! Preserve(command)
     let @/=_s
     call cursor(l, c)
 endfunction
-nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR> "clean space in the end of line 
 nnoremap _= :call Preserve("normal gg=G")<CR>
 
 "Allow to toggle background
@@ -848,6 +787,7 @@ noremap <leader>bg :call ToggleBG()<CR>
 
 "CompileConfig
 map <leader>r :call CompileRun()<CR>
+"TODO: seperate compile and run 
 func! CompileRun()
     exec "w"
     if &filetype == 'c'
@@ -890,44 +830,36 @@ autocmd BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \   exe "normal! g`\"" |
             \ endif
-autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
-autocmd! BufRead,BufNewFile *.swift set filetype=swift
-autocmd! BufRead,BufNewFile *.markdown set filetype=markdown
-autocmd! BufRead,BufNewFile *.md       set filetype=markdown
-autocmd! BufRead,BufNewFile,BufReadPost *.snippets set filetype=snippets
-autocmd! BufRead,BufNewFile *.json set filetype=json
-autocmd! BufRead,BufNewFile *.ts set filetype=typescript
-autocmd BufNewFile,BufRead *.vm set filetype=html
-autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-autocmd BufNewFile,BufRead *.conf set filetype=config
-au BufRead,BufNewFile *.scss set filetype=scss.css
-autocmd BufNewFile,BufRead *.vm set filetype=html
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+
+autocmd! BufNewFile,BufRead *.vs,*.fs set filetype=glsl
+autocmd! BufNewFile,BufRead *.swift set filetype=swift
+autocmd! BufNewFile,BufRead *.markdown *.md set filetype=markdown
+autocmd! BufNewFile,BufRead,BufReadPost *.snippets set filetype=snippets
+autocmd! BufNewFile,BufRead *.json set filetype=json
+autocmd! BufNewFile,BufRead *.ts set filetype=typescript
+autocmd! BufNewFile,BufRead *.vm *.xtpl *.ejs set filetype=html
+" autocmd! BufNewFile,BufRead *.jinja set syntax=htmljinja
+autocmd! BufNewFile,BufRead *.html.twig set filetype=html.twig
+autocmd! BufNewFile,BufRead *.conf set filetype=config
+autocmd! BufRead,BufNewFile *.scss set filetype=scss.css
+autocmd! BufNewFile,BufRead *.coffee set filetype=coffee
+autocmd! BufNewFile,BufRead *.rss *.atom setfiletype xml
+autocmd! BufNewFile,BufRead *.vm set ft=velocity
+autocmd! BufNewFile,BufRead *.mako set ft=mako
+autocmd! BufNewFile,BufRead *.tex set filetype=tex
+autocmd! BufNewFile,BufRead *.bat
+            \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
+
 autocmd FileType haskell setlocal commentstring=--\ %s
-autocmd BufNewFile,BufRead *.rss setfiletype xml
 autocmd FileType xhtml,xml ru ftPlug/html/autoclosetag.vim
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG
+autocmd FileType gitcommit autocmd! BufEnter COMMIT_EDITMSG
             \ call setpos('.', [0, 1, 1, 0])
-au VimEnter * :call SetTabLabel()
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown "Maybe Conflict"
-autocmd BufRead,BufNewFile *.json setf json
-autocmd BufNewFile,BufReadPost *.xtpl set filetype=html
-autocmd BufNewFile,BufRead *.vm set ft=velocity
-autocmd BufNewFile,BufRead *.xtpl set ft=html
-autocmd BufNewFile,BufRead *.ejs set ft=html
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xtpl set ft=html
-autocmd BufNewFile,BufRead *.rss,*.atom setfiletype xml
-autocmd FocusGained, BufEnter * :silent! !
 autocmd FileType python syn keyword pythonDecorator True None False self
-autocmd BufNewFile,BufRead *.jinja set syntax=htmljinja
-autocmd BufNewFile,BufRead *.mako set ft=mako
-autocmd BufRead,BufNewFile *.md set filetype=markdown "Maybe Conflict""
-autocmd BufRead,BufNewFile *.tex set filetype=tex
-au! BufRead,BufNewFile *.bat
-            \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
+autocmd VimEnter * :call SetTabLabel()
+autocmd FocusGained, BufEnter * :silent! !
 autocmd WinEnter call SetTabLabel()
 autocmd BufEnter call SetTabLabel()
 "https://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
@@ -953,7 +885,7 @@ autocmd Filetype *
             \setlocal omnifunc=syntaxcomplete#Complete |
             \endif
 " Automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 " Restore cursor position upon reopening files {{{
 autocmd BufReadPost *
             \ if &filetype != "gitcommit" && line("'\"") > 0 && line("'\"") <= line("$") |
@@ -964,13 +896,16 @@ autocmd BufReadPost *
 au BufNewFile,BufRead *.plt,.gnuplot setf gnuplot
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd FileType ruby set dictionary+=~/.vim/dict/ruby.dict
-au FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
+autocmd FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
+
 " 按照PEP8标准来配置vim
-au BufNewFile,BufRead *.py,*.cpp set tabstop=4 |set softtabstop=4|set shiftwidth=4|set textwidth=79|set expandtab|set autoindent|set fileformat=unix
+autocmd BufNewFile,BufRead *.py,*.cpp set tabstop=4 |set softtabstop=4|
+            \ set shiftwidth=4|set textwidth=79|set expandtab|set autoindent
+            \ |set fileformat=unix
 
 
 "Let external space be red
 hi BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "}
 
