@@ -49,7 +49,7 @@ PluginInstall
 ------------
 1. Git from this repository
 ```bash
-git https://github.com/VDeamoV/VDeamoV-vimrc.git ~/.vim
+git clone https://github.com/VDeamoV/VDeamoV-vimrc.git ~/.vim
 cd ~/.vim
 git submodule update --init --recursive
 cd ~/.vim/fonts
