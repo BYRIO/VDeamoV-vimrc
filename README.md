@@ -54,6 +54,7 @@ cd ~/.vim
 git clone https://github.com/powerline/fonts.git ~/.vim/fonts
 cd ~/.vim/fonts
 sudo ./install.sh # install fonts for the themes
+cp ~/.vim/vimrc ~/.vimrc
 ```
 2. Install Plugs
   - After enter the vim, use the commond below
