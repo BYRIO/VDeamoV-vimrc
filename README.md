@@ -51,7 +51,7 @@ PluginInstall
 ```bash
 git clone https://github.com/VDeamoV/VDeamoV-vimrc.git ~/.vim
 cd ~/.vim
-git submodule update --init --recursive
+git clone https://github.com/powerline/fonts.git ~/.vim/fonts
 cd ~/.vim/fonts
 sudo ./install.sh # install fonts for the themes
 ```
