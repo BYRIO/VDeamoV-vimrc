@@ -7,8 +7,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'hotoo/pangu.vim', {'for': ['markdown']} "to make your document better
 
 "textobj
-Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] }
 Plug 'sgur/vim-textobj-parameter'
@@ -23,7 +23,7 @@ Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
 Plug 'mzlogin/vim-kramdown-tab', {'for': ['markdown']} "fix for kramdown
 "Use <leader>tab to use
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
-":GenTocGFM/:GenTocRedcarpet
+" :GenTocGFM/:GenTocRedcarpet
 ":UpdateToc 更新目录
 Plug 'dhruvasagar/vim-table-mode', {'for': ['markdown']}
 "<leader>tm to enable
@@ -64,6 +64,8 @@ Plug 'mhinz/vim-signify' "代替gitgutter
 "Plug 'mhinz/vim-grepper'
 Plug 'dyng/ctrlsf.vim'
 Plug 'rizzatti/dash.vim'
+Plug 'tpope/vim-abolish' "增强版的substitue
+":%S/{man,dog}/{dog,man}/g 替换man和dog的位置
 
 
 "Brackets Jump 智能补全括号和跳转
@@ -174,7 +176,7 @@ if !&sidescrolloff
     set scrolloff=5
 endif
 set display+=lastline
-" set nowrap      " Do not wrap long lines
+set nowrap      " Do not wrap long lines
 set backspace=eol,start,indent
 
 if has('syntax')
@@ -271,8 +273,8 @@ if maparg('<C-L>', 'n') ==# ''
     nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 nnoremap <leader>l :set list!<CR>
-nnoremap <leader>ll :set conceallevel=0
-nnoremap <leader>lc :set conceallevel=1
+nnoremap <leader>ll :set conceallevel=0<CR>
+nnoremap <leader>lc :set conceallevel=1<CR>
 "show the $ in the end of the line
 "noremap <Leader>W :w !sudo tee % > /dev/null
 " Quickly edit/reload the vimrc file
@@ -639,6 +641,20 @@ let g:indentLine_enabled=1
 " Set tabstop, softtabstop and shiftwidth to the same value
 command! -nargs=1 Rename let tpname = expand('%:t') | saveas <args> | edit <args> | call delete(expand(tpname))
 command! -nargs=* Stab call Stab()
+
+"普通模式和可视模式下&都代表着重复上一次搜索操作，同时保持上一次的搜索域
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" 可视模式下，用 * 和 # 搜索选中文本
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-r>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-r>=@/<CR><CR>
+function! s:VSetSearch()
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
 
 function! Stab()
     "设置缩进
