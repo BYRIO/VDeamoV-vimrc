@@ -3,6 +3,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 "{Plugstall with Plug
 
+
 "AutoFix Sytle
 Plug 'hotoo/pangu.vim', {'for': ['markdown']} "to make your document better
 
@@ -16,6 +17,8 @@ Plug 'sgur/vim-textobj-parameter'
 "Cpp Plug
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 
+"Java Plug
+Plug 'artur-shaik/vim-javacomplete2', {'for':['java']}
 
 "Markdowm
 Plug 'godlygeek/tabular', {'for': ['markdown']}
@@ -43,13 +46,13 @@ Plug 'keith/swift.vim',{'for':['swift']}
 "solidity Type:make from a .sol file
 "Plug 'groenewege/vim-less'
 "js extend less,need install less npm install less
-Plug 'xuhdev/vim-latex-live-preview', {'for': ['latex']}
+Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex']}
+
 "Github
 Plug 'tpope/vim-fugitive'
 Plug 'skywind3000/asyncrun.vim' "编译C++
 "Debuge For PHP,Pyton,Perl,Ruby,Tcl and NodeJS,etc
 "Plug 'joonty/vdebug'
-
 
 "FileManage
 Plug 'scrooloose/nerdtree'
@@ -58,8 +61,9 @@ Plug 'Xuyuanp/nerdtree-git-Plugin'
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 
-
 "search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-signify' "代替gitgutter
 "Plug 'mhinz/vim-grepper'
 Plug 'dyng/ctrlsf.vim'
@@ -151,7 +155,7 @@ set foldmethod=indent
 set tabstop=2  softtabstop=2 shiftwidth=2 expandtab
 set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 set autoread
-set wildignore=*.o,*~,*.pyc,*.swp,*.bak,*.class
+set wildignore=*.o,*~,*.pyc,*.swp,*.bak,*.class,*.DS_Store
 
 if has('win16') || has('win32')
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
@@ -228,15 +232,15 @@ if gitroot != ''
     let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
 
-" colorscheme Tomorrow-Night
-colorscheme PaperColor
-"colorscheme hybrid_material
-"colorscheme anderson
+colorscheme Tomorrow-Night
+" colorscheme PaperColor
+" colorscheme hybrid_material
+" colorscheme anderson
 
 set t_Co=256
 set nofoldenable                  " Auto fold code
-" set foldlevel=99
-"set foldlevelstart=99
+set foldlevel=99
+set foldlevelstart=99
 set nomodeline                  " disable mode lines (security measure)
 " allow mouse select and etc operation
 set mouse=a
@@ -396,7 +400,7 @@ let g:ale_sign_warning = 'W'
 
 let g:ale_linters = {
 \   'python': ['pylint'],
-\   'latex': ['lacheck'],
+\   'tex': ['lacheck'],
 \   'swift': ['swiftlint'],
 \   'markdown': ['markdownlint'],
 \   'cpp': ['gcc', 'cpplint'],
@@ -854,7 +858,6 @@ autocmd! BufNewFile,BufRead,BufReadPost *.snippets set filetype=snippets
 autocmd! BufNewFile,BufRead *.json set filetype=json
 autocmd! BufNewFile,BufRead *.ts set filetype=typescript
 autocmd! BufNewFile,BufRead *.vm *.xtpl *.ejs set filetype=html
-" autocmd! BufNewFile,BufRead *.jinja set syntax=htmljinja
 autocmd! BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd! BufNewFile,BufRead *.conf set filetype=config
 autocmd! BufRead,BufNewFile *.scss set filetype=scss.css
@@ -866,6 +869,7 @@ autocmd! BufNewFile,BufRead *.tex set filetype=tex
 autocmd! BufNewFile,BufRead *.bat
             \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
 
+autocmd! FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType haskell setlocal commentstring=--\ %s
 autocmd FileType xhtml,xml ru ftPlug/html/autoclosetag.vim
 " Instead of reverting the cursor to the last position in the buffer, we
@@ -915,7 +919,7 @@ autocmd FileType ruby set dictionary+=~/.vim/dict/ruby.dict
 autocmd FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
 
 " 按照PEP8标准来配置vim
-autocmd BufNewFile,BufRead *.py,*.cpp set tabstop=4 |set softtabstop=4|
+autocmd BufNewFile,BufRead *.py,*.cpp,*.java set tabstop=4 |set softtabstop=4|
             \ set shiftwidth=4|set textwidth=79|set expandtab|set autoindent
             \ |set fileformat=unix
 
