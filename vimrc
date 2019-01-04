@@ -17,9 +17,6 @@ Plug 'sgur/vim-textobj-parameter'
 "Cpp Plug
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 
-"Java Plug
-Plug 'artur-shaik/vim-javacomplete2', {'for':['java']}
-
 "Markdowm
 Plug 'godlygeek/tabular', {'for': ['markdown']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
@@ -869,7 +866,6 @@ autocmd! BufNewFile,BufRead *.tex set filetype=tex
 autocmd! BufNewFile,BufRead *.bat
             \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
 
-autocmd! FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType haskell setlocal commentstring=--\ %s
 autocmd FileType xhtml,xml ru ftPlug/html/autoclosetag.vim
 " Instead of reverting the cursor to the last position in the buffer, we
