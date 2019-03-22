@@ -75,7 +75,7 @@ Startify
 ColorScheme
 -----------
 - *Search colorscheme in the vimrc to find my configure*
-- *use `:coloscheme` then tab to see other scheme*
+- *use `:colorscheme` then tab to see other scheme*
 - *<leader>bg to change the daymode and nightmode*
   My <leader> is `,`, you can modify it in the vimrc
 
