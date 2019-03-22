@@ -84,7 +84,7 @@ Plug 'marijnh/tern_for_vim',{ 'for' : 'javascript'}
 
 ""Snippet 智能输入
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'VDeamoV/vim-snippets'
 "Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neosnippet-snippets'
 
@@ -229,8 +229,8 @@ if gitroot != ''
     let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
 
-colorscheme Tomorrow-Night
-" colorscheme PaperColor
+" colorscheme Tomorrow-Night
+colorscheme PaperColor
 " colorscheme hybrid_material
 " colorscheme anderson
 
@@ -427,7 +427,7 @@ nnoremap <F10> : call asyncrun#quickfix_toggle(6)<CR>
 " nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
 
 "pangu.vim
-autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
+" autocmd BufWritePre *.markdown,*.md,*.text,*.txt,*.wiki,*.cnx call PanGuSpacing()
 
 "vim-table-mode
 let g:table_mode_corner = '|'
@@ -628,6 +628,10 @@ let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+let g:snips_author = "VDeamoV"
+let g:snips_email = "vincent.duan95@outlook.com"
+let g:snips_github = "https://github.com/VDeamoV"
+
 
 "vim-airline/vim-airline-themes
 let g:airline_theme='dark'
