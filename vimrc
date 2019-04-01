@@ -1,8 +1,7 @@
-filetype off
-
 call plug#begin('~/.vim/plugged')
 "{Plugstall with Plug
-
+" 中英切换问题（Mac
+Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}
 
 "AutoFix Sytle
 Plug 'hotoo/pangu.vim', {'for': ['markdown']} "to make your document better
@@ -38,16 +37,22 @@ Plug 'tpope/vim-liquid'
 "Swift
 Plug 'keith/swift.vim',{'for':['swift']}
 
+"Github
+Plug 'tpope/vim-fugitive'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+" visit github in vim
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
+
 "Compile
 "Plug 'dmdque/solidity.vim'
 "solidity Type:make from a .sol file
 "Plug 'groenewege/vim-less'
 "js extend less,need install less npm install less
 Plug 'xuhdev/vim-latex-live-preview', {'for': ['tex']}
-
-"Github
-Plug 'tpope/vim-fugitive'
+Plug 'lervag/vimtex', {'for': ['tex']}
 Plug 'skywind3000/asyncrun.vim' "编译C++
+
 "Debuge For PHP,Pyton,Perl,Ruby,Tcl and NodeJS,etc
 "Plug 'joonty/vdebug'
 
@@ -109,10 +114,19 @@ Plug 'flazz/vim-colorschemes'
 Plug 'Yggdroot/indentLine' "缩进的虚线
 Plug 'bling/vim-bufferline' "为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature' "书签可视化
-Plug 'tmhedberg/simpylfold'
 
 "Other Setting
 " Plug 'vim-scripts/LargeFile'
+Plug 'terryma/vim-multiple-cursors'
+
+" python <Leader-w>逐行执行
+Plug 'sillybun/vim-repl', {'do': './install.sh'}
+Plug 'sillybun/vim-async', {'do': './install.sh'}
+Plug 'sillybun/zytutil'
+
+" 参数提示
+Plug 'Shougo/echodoc.vim'
+
 "}Initialize Plug system
 call plug#end()
 
@@ -146,10 +160,8 @@ if has('clipboard')
 endif
 set nobackup
 set noswapfile
-set nowritebackup
 set iskeyword-=_,.,=,-,:,
-set foldmethod=indent
-set tabstop=2  softtabstop=2 shiftwidth=2 expandtab
+set tabstop=4  softtabstop=4 shiftwidth=4 expandtab
 set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 set autoread
 set wildignore=*.o,*~,*.pyc,*.swp,*.bak,*.class,*.DS_Store
@@ -184,27 +196,40 @@ if has('syntax')
     syntax enable
 endif
 
-set textwidth=80 "最大字符长度
-let &colorcolumn=join(range(81,999),',')
-let &colorcolumn='80,'.join(range(120,999),',')
 set colorcolumn=+1
 set autoindent
 set smartindent
 set smarttab
 set ruler
 
+" fold config
+" foldmethod [diff, expr, indent, manual, marker, syntax]
+" diff show the diff between unfold and fold
+" expr use `foldexpr` to config fold logic
+" indent fold base on indent
+" manual use zf zF or :Fold to fold, zfa(,
+"                     :mkview to save 
+"                     :loadview to reload
+" mark ....
+" syntax
+set foldmethod=manual
+set foldlevel=99
+set foldlevelstart=99
+
+nnoremap <space> za
+vnoremap <space> zf 
+
+" config hightlight for cursor
 set cursorcolumn
 set cursorline
+highlight CursorLine term=reverse
+highlight CursorColumn term=reverse
+
 "set autochdir "disable for leadf
 set laststatus=2  " always show statusline
 set showtabline=2 " always show tabline
 set hidden
-" enables filetype based indentation
-" Enable file type detection.
-" Use the default filetype settings, so that mail gets 'tw' set to 72,
-" 'cindent' is on in C files, etc.
-" Also load indent files, to automatically do language-dependent indenting.
-"
+
 filetype plugin indent on
 set noerrorbells novisualbell t_vb=
 set autowrite
@@ -234,109 +259,107 @@ colorscheme PaperColor
 " colorscheme hybrid_material
 " colorscheme anderson
 
+" number of colors
 set t_Co=256
-set nofoldenable                  " Auto fold code
-set foldlevel=99
-set foldlevelstart=99
 set nomodeline                  " disable mode lines (security measure)
+
 " allow mouse select and etc operation
 set mouse=a
+
+" save 1000 cmd
 set history=1000
-" no annoying sound on errors
+" give u 500 time to react for cmd
 set timeoutlen=500
+set list
+set guioptions=e "only show guitablabel
+
+" wrap config
+" formation options
+" default is tcq 
+" t: 根据 textwidth 自动折行
+" c: 在（程序源代码中的）注释中自动折行，插入合适的注释起始字符
+" r: 插入模式下在注释中键入回车时，插入合适的注释起始字符
+" q: 允许使用"gq"命令对注释进行格式化；
+" n: 识别编号列表，编号行的下一行的缩进由数字后的空白决定（与“2”冲突，需要“autoindent”）；
+" 2: 使用一段的第二行的缩进来格式化文本；
+" l: 在当前行长度超过 textwidth 时，不自动重新格式化；
+" m: 在多字节字符处可以折行，对中文特别有效（否则只在空白字符处折行）；
+" M: 在拼接两行时（重新格式化，或者是手工使用“J”命令），如果前一行的结尾或后一行的开头是多字节字符，则不插入空格，非常适合中文
+" 
+set textwidth=80 "最大字符长度
 set formatoptions+=t
+set formatoptions-=l " wrap long lines
 if v:version > 703 || v:version == 703 && has('patch541')
     set formatoptions+=j " Delete comment chars when join comment lines
 endif
-set formatoptions-=l " wrap long lines
+" color the 81 column
+let &colorcolumn=join(range(81,999),',')
+let &colorcolumn='80,'.join(range(120,999),',')
 set wrapmargin=2 " 2 chars wrap margin from the right window border, hard wrap
-"set conceallevel=0
-set list
-set guioptions=e "only show guitablabel
-"set guioptions=
-" syntax on
-highlight CursorLine term=reverse
-highlight CursorColumn term=reverse
+
+
+" for tmux
+if exists('$TMUX')
+  set term=screen-256color
+endif
 "}
 
-"{Mappings
+"{Basic Mappings
 let mapleader=','
 
-" 定义移动到行首行尾
-nmap ZS ^
-nmap ZE $
+nmap . .`[
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
+
+nnoremap <leader>l :set list!<CR>
+nnoremap <leader>ll :set conceallevel=0<CR>
+nnoremap <leader>lc :set conceallevel=1<CR>
+
+" Quickly edit/reload the vimrc file
+nnoremap <leader>ev :tabe $MYVIMRC<CR>
+
+" show HEX and return
+nnoremap <Leader>xd :%!xxd<CR>
+nnoremap <Leader>xr :%!xxd -r<CR>
+
+" Window control
+" open a new tab
+nnoremap <leader>t :tabe<CR>
+" open new
+nnoremap <leader>v :vnew<CR>
+" close tab
+nnoremap <leader>tq :tabclose<CR>
+" tab switch
+nnoremap <C-Tab> :tabnext<CR>
+imap <C-Tab> :tabnext<CR>
+map <C-S-Tab> :tabprev<CR>
+imap <C-S-Tab> :tabprev<CR>
+
+" use ]+space create spaceline
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 
 " Use <C-L> to clear the highlighting of :set hlsearch
 if maparg('<C-L>', 'n') ==# ''
     nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
-nnoremap <leader>l :set list!<CR>
-nnoremap <leader>ll :set conceallevel=0<CR>
-nnoremap <leader>lc :set conceallevel=1<CR>
-"show the $ in the end of the line
-"noremap <Leader>W :w !sudo tee % > /dev/null
-" Quickly edit/reload the vimrc file
-nnoremap <leader>ev :tabe $MYVIMRC<CR>
-"fast find vimrc
-autocmd! BufWritePost .vimrc source ~/.vimrc
 
-"nnoremap <space> za
-"vnoremap <space> zf
-"Both are fold the function, change to zs and zo for simpyfold
 
-" tab switch key mappings
-" http://vim.wikia.com/wiki/Alternative_tab_navigation
-"nnoremap <A-1> 1gt
-"nnoremap <A-2> 2gt
-"nnoremap <A-3> 3gt
-"nnoremap <A-4> 4gt
-"nnoremap <A-5> 5gt
-"nnoremap <A-6> 6gt
-"nnoremap <A-7> 7gt
-"nnoremap <A-8> 8gt
-"nnoremap <A-9> 9gt
-"nnoremap <A-0> 10gt
-" map for xxd editing
-nnoremap <Leader>xd :%!xxd<CR>
-nnoremap <Leader>xr :%!xxd -r<CR>
-"show HEX and return
-nnoremap <leader>t :tabe<CR>
-"open a new tab
-"nnoremap <leader>st :echo strftime('%c')<CR>
-"show time now
 
-nnoremap <leader>v :vnew<CR>
-"open new
-nnoremap <leader>tq :tabclose<CR>
-"close tab
-
-"
-"Tips
-nmap . .`[
-
-" nnoremap    <C-Tab>    :tabnext<CR>
-"imap   <C-Tab>    <C-O>:tabnext<CR>
-" map    <C-S-Tab>  :tabprev<CR>
-"imap   <C-S-Tab>  <C-O>:tabprev<CR>
-
-"Simplify help navigation
-"http://vim.wikia.com/wiki/Learn_to_use_help
-"Press Enter to jump to the subject (topic) under the cursor.
-"Press Backspace to return from the last jump.
-"Press s to find the next subject, or S to find the previous subject.
-"Press o to find the next option, or O to find the previous option.
-"nnoremap <buffer> <CR> <C-]>
-"nnoremap <buffer> <BS> <C-T>
-"nnoremap <buffer> o /'\l\{2,\}'<CR>
-"nnoremap <buffer> O ?'\l\{2,\}'<CR>
-"nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
-"nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 "}
 
 "{Plug settings
+
+"gist-vim
+let github_user='VDeamoV'
+
+"vim-xkbswitch
+let g:XkbSwitchEnabled     = 1
+let g:XkbSwitchIMappings   = ['cn']
+let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
+"echodoc
+set noshowmode
+set cmdheight=2
 
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
@@ -440,57 +463,20 @@ let g:table_mode_auto_align = 0
 let g:vmt_auto_update_on_save=1 "update toc when save
 let g:vmt_dont_insert_fence=0 "if equals to 1, can't update toc when save
 
-"SimpylFold
-let g:SimpyFold_docstring_preview=1
-nnoremap <space> zc
-"zo to unfold
-
 "deoplete
 "let g:deoplete#enable_at_startup = 1
-
-"emmet-vim
-"let g:user_emmet_settings = {
-            "\ 'wxss': {
-            "\   'extends': 'css',
-            "\ },
-            "\ 'wxml': {
-            "\   'extends': 'html',
-            "\   'aliases': {
-            "\     'div': 'view',
-            "\     'span': 'text',
-            "\   },
-            "\  'default_attributes': {
-            "\     'block': [{'wx:for-items': '{{list}}','wx:for-item': '{{item}}'}],
-            "\     'navigator': [{'url': '', 'redirect': 'false'}],
-            "\     'scroll-view': [{'bindscroll': ''}],
-            "\     'swiper': [{'autoplay': 'false', 'current': '0'}],
-            "\     'icon': [{'type': 'success', 'size': '23'}],
-            "\     'progress': [{'precent': '0'}],
-            "\     'button': [{'size': 'default'}],
-            "\     'checkbox-group': [{'bindchange': ''}],
-            "\     'checkbox': [{'value': '', 'checked': ''}],
-            "\     'form': [{'bindsubmit': ''}],
-            "\     'input': [{'type': 'text'}],
-            "\     'label': [{'for': ''}],
-            "\     'picker': [{'bindchange': ''}],
-            "\     'radio-group': [{'bindchange': ''}],
-            "\     'radio': [{'checked': ''}],
-            "\     'switch': [{'checked': ''}],
-            "\     'slider': [{'value': ''}],
-            "\     'action-sheet': [{'bindchange': ''}],
-            "\     'modal': [{'title': ''}],
-            "\     'loading': [{'bindchange': ''}],
-            "\     'toast': [{'duration': '1500'}],
-            "\     'audio': [{'src': ''}],
-            "\     'video': [{'src': ''}],
-            "\     'image': [{'src': '', 'mode': 'scaleToFill'}],
-            "\   }
-            "\ },
-"\}
 
 "vim-latex-live-preview
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
+
+"vimtex
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
 
 "pathogen
 execute pathogen#infect()
@@ -638,7 +624,6 @@ let g:airline_theme='dark'
 
 "Yggdroot/indentLine
 let g:indentLine_enabled=1
-"let g:indentLine_conceallevel=0
 
 "}
 
@@ -852,6 +837,10 @@ autocmd BufReadPost *
             \   exe "normal! g`\"" |
             \ endif
 
+" source vimrc immediately
+autocmd! BufWritePost .vimrc source ~/.vimrc
+
+" Filetype config
 autocmd! BufNewFile,BufRead *.vs,*.fs set filetype=glsl
 autocmd! BufNewFile,BufRead *.swift set filetype=swift
 autocmd! BufNewFile,BufRead *.markdown *.md set filetype=markdown
@@ -870,16 +859,18 @@ autocmd! BufNewFile,BufRead *.tex set filetype=tex
 autocmd! BufNewFile,BufRead *.bat
             \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
 
-autocmd FileType haskell setlocal commentstring=--\ %s
-autocmd FileType xhtml,xml ru ftPlug/html/autoclosetag.vim
-" Instead of reverting the cursor to the last position in the buffer, we
+" different config for different filetypes
+autocmd! FileType haskell setlocal commentstring=--\ %s
+autocmd! FileType xhtml,xml ru ftPlug/html/autoclosetag.vim
 " set it to the first line when editing a git commit message
-autocmd FileType gitcommit autocmd! BufEnter COMMIT_EDITMSG
+autocmd! FileType gitcommit autocmd! BufEnter COMMIT_EDITMSG
             \ call setpos('.', [0, 1, 1, 0])
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType python syn keyword pythonDecorator True None False self
-autocmd VimEnter * :call SetTabLabel()
+autocmd! FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd! FileType python syn keyword pythonDecorator True None False self
+
 autocmd FocusGained, BufEnter * :silent! !
+
+autocmd VimEnter * :call SetTabLabel()
 autocmd WinEnter call SetTabLabel()
 autocmd BufEnter call SetTabLabel()
 "https://superuser.com/questions/195022/vim-how-to-synchronize-nerdtree-with-current-opened-tab-file-path
@@ -912,8 +903,9 @@ autocmd BufReadPost *
             \   exe "normal! g`\"" |
             \ endif
 " }}}
+
 " gnuplot syntax highlighting
-au BufNewFile,BufRead *.plt,.gnuplot setf gnuplot
+autocmd BufNewFile,BufRead *.plt,.gnuplot setf gnuplot
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd FileType ruby set dictionary+=~/.vim/dict/ruby.dict
 autocmd FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
