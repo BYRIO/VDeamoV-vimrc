@@ -68,16 +68,51 @@ cp ~/.vim/vimrc ~/.vimrc
     sudo ./install.py -all
     ```
 
-Startify
--------
-*You need to modify the startify configure in the vimrc*
+Mappings
+--------
+```bash
+let mapleader=','
 
-ColorScheme
------------
+nmap . .`[
+
+nnoremap <Leader>eg :e ++enc=gbk<CR>
+nnoremap <Leader>eu :e ++enc=utf8<CR>
+
+nnoremap <leader>l :set list!<CR>                       " quick config to see or not see special character  
+nnoremap <leader>ll :set conceallevel=0<CR>             " quick change conceal mode
+nnoremap <leader>lc :set conceallevel=1<CR>
+
+nnoremap <leader>ev :tabe $MYVIMRC<CR>                  " Quickly edit/reload the vimrc file
+
+" show HEX and return
+nnoremap <Leader>xd :%!xxd<CR>
+nnoremap <Leader>xr :%!xxd -r<CR>
+
+" Window control
+nnoremap <leader>t :tabe<CR>                            " open a new tab
+nnoremap <leader>v :vnew<CR>                            " close tab
+nnoremap <leader>tq :tabclose<CR>
+
+" use ]+space create spaceline
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+
+" Use <C-L> to clear the highlighting of :set hlsearch
+if maparg('<C-L>', 'n') ==# ''
+    nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+```
+Need Additional Configure
+------------------------
+1. Startify
+- *You need to modify the startify configure in the vimrc*
+
+2. ColorScheme
 - *Search colorscheme in the vimrc to find my configure*
 - *use `:colorscheme` then tab to see other scheme*
-- *<leader>bg to change the daymode and nightmode*
-  My <leader> is `,`, you can modify it in the vimrc
+- *`<leader>bg` to change the daymode and nightmode*
+
+3. ale
+- *You need to ensure you have install the correct lint which you used in the config, such as pylint, autopep8*
 
 
 PluginList
