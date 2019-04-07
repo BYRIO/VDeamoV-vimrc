@@ -26,7 +26,7 @@ Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
 " Plug 'sillybun/vim-repl', {'do': './install.sh'}      " python <Leader-w>逐行执行
 " Plug 'sillybun/vim-async', {'do': './install.sh'}
 " Plug 'sillybun/zytutil'
-Plug 'Shougo/echodoc.vim'                               " 参数提示
+Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
 Plug 'skywind3000/asyncrun.vim'                         " Compile
@@ -120,17 +120,20 @@ if maparg('<C-L>', 'n') ==# ''
 "pathogen
 execute pathogen#infect()
 
+"echodoc
+let g:echodoc#enable_at_startup=1
+
 "easymotion
 " <Leader>f{char} to move to {char}
 map  <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
+nmap <leader>s <Plug>(easymotion-overwin-f2)
 
 " Move to line
-map L <Plug>(easymotion-bd-jk)
-nmap L <Plug>(easymotion-overwin-line)
+map <leader>L <Plug>(easymotion-bd-jk)
+nmap <leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
 map  <Leader>w <Plug>(easymotion-bd-w)
@@ -241,8 +244,6 @@ let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 
 "echodoc
-set noshowmode
-set cmdheight=2
 
 "LightLine
 let g:lightline = {
@@ -396,6 +397,7 @@ set lazyredraw                                                          " don't 
 set backspace=eol,start,indent                                          " use backspace for delete space line
 set ruler                                                               " show the cursor's position
 set nomodeline                                                          " disable mode lines (security measure)
+set noshowmode                                                          " do not show Insert, We already have it in lightline
 set mouse=a                                                             " allow mouse select and etc operation
 set autoindent                                                          " config the indent
 set smartindent
@@ -425,7 +427,6 @@ set hidden
 set display+=lastline
 set noerrorbells novisualbell t_vb=                                     " cancel the annoying bell
 set belloff=all
-set showmode                                                            " Display current mode
 set showcmd                                                             " Show partial commands in status line and
 " Selected characters/lines in visual mode
 set viewoptions=folds,options,cursor,unix,slash                         " Better Unix / Windows compatibility
