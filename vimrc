@@ -23,9 +23,9 @@ Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-Plug 'sillybun/vim-repl', {'do': './install.sh'}        " python <Leader-w>逐行执行
-Plug 'sillybun/vim-async', {'do': './install.sh'}
-Plug 'sillybun/zytutil'
+" Plug 'sillybun/vim-repl', {'do': './install.sh'}      " python <Leader-w>逐行执行
+" Plug 'sillybun/vim-async', {'do': './install.sh'}
+" Plug 'sillybun/zytutil'
 Plug 'Shougo/echodoc.vim'                               " 参数提示
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
@@ -80,10 +80,61 @@ Plug 'tpope/vim-abolish'                                                        
 Plug 'Yggdroot/LeaderF'                                                         " Ultra search tools
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   Mappings                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Caution: Mapping should place before PluginConfigure
+
+
+let mapleader=','
+
+nmap . .`[
+
+nnoremap <Leader>eg :e ++enc=gbk<CR>
+nnoremap <Leader>eu :e ++enc=utf8<CR>
+
+nnoremap <leader>lc :set list!<CR>                      " quick config to see or not see special character  
+nnoremap <leader>ll :set conceallevel!<CR>              " quick change conceal mode
+
+nnoremap <leader>ev :tabe $MYVIMRC<CR>                  " Quickly edit/reload the vimrc file
+
+" show HEX and return
+nnoremap <Leader>xd :%!xxd<CR>
+nnoremap <Leader>xr :%!xxd -r<CR>
+
+" Window control
+nnoremap <leader>t :tabe<CR>                            " open a new tab
+nnoremap <leader>v :vnew<CR>                            " close tab
+nnoremap <leader>tq :tabclose<CR>
+
+" use ]+space create spaceline
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+
+" Use <C-L> to clear the highlighting of :set hlsearch
+if maparg('<C-L>', 'n') ==# ''
+    nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+                                                                         endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               PluginConfigure                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "pathogen
 execute pathogen#infect()
+
+"easymotion
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map L <Plug>(easymotion-bd-jk)
+nmap L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 "asyncrun
 " auto open quickfix window, height = 6
@@ -109,7 +160,6 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 
 "mhinz/vim-startify
-noremap <Leader>s :Startify<CR>
 let g:startify_list_order = [
             \ ['   Bookmarks'],     'bookmarks',
             \ ['   MRU'],           'files' ,
@@ -148,6 +198,7 @@ let g:table_mode_auto_align = 0
 "vim-markdown-toc
 let g:vmt_auto_update_on_save=1 "update toc when save
 let g:vmt_dont_insert_fence=0 "if equals to 1, can't update toc when save
+
 "gist-vim
 let github_user='VDeamoV'
 
@@ -216,7 +267,7 @@ let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 "customize python and keymapping
 "ref:https://gist.github.com/lencioni/dff45cd3d1f0e5e23fe6
 "ref:https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-let g:UltiSnipsUsePythonVersion    = 3
+let g:UltiSnipsUsePythonVersion    = 2
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
@@ -250,8 +301,8 @@ let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
-let g:ycm_python_binary_path='/usr/local/bin/python3'
-let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+let g:ycm_python_binary_path='/usr/bin/python3'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
@@ -320,14 +371,6 @@ let g:ale_fixers = {
 "Use :ALEFix to fix
 let g:ale_list_window_size = 5
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                    Themes                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" colorscheme Tomorrow-Night
-" colorscheme PaperColor
-colorscheme hybrid_material
-" colorscheme anderson
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Basic Settings                                "
@@ -381,6 +424,7 @@ set showtabline=2                                                       " always
 set hidden
 set display+=lastline
 set noerrorbells novisualbell t_vb=                                     " cancel the annoying bell
+set belloff=all
 set showmode                                                            " Display current mode
 set showcmd                                                             " Show partial commands in status line and
 " Selected characters/lines in visual mode
@@ -478,37 +522,6 @@ if exists('$TMUX')
   set term=screen-256color
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                   Mappings                                   "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader=','
-
-nmap . .`[
-
-nnoremap <Leader>eg :e ++enc=gbk<CR>
-nnoremap <Leader>eu :e ++enc=utf8<CR>
-
-nnoremap <leader>lc :set list!<CR>                      " quick config to see or not see special character  
-nnoremap <leader>ll :set conceallevel!<CR>              " quick change conceal mode
-
-nnoremap <leader>ev :tabe $MYVIMRC<CR>                  " Quickly edit/reload the vimrc file
-
-" show HEX and return
-nnoremap <Leader>xd :%!xxd<CR>
-nnoremap <Leader>xr :%!xxd -r<CR>
-
-" Window control
-nnoremap <leader>t :tabe<CR>                            " open a new tab
-nnoremap <leader>v :vnew<CR>                            " close tab
-nnoremap <leader>tq :tabclose<CR>
-
-" use ]+space create spaceline
-nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
-
-" Use <C-L> to clear the highlighting of :set hlsearch
-if maparg('<C-L>', 'n') ==# ''
-    nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -800,4 +813,12 @@ autocmd BufNewFile,BufRead *.py,*.cpp,*.java set tabstop=4 |set softtabstop=4|
 highlight BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
 autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    Themes                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" colorscheme Tomorrow-Night
+" colorscheme PaperColor
+colorscheme hybrid_material
+" colorscheme anderson
 
