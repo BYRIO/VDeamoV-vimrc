@@ -88,6 +88,9 @@ call plug#end()
 let mapleader=','
 
 nmap . .`[
+nmap <leader>w :w<CR>
+nmap <leader>q :wq<CR>
+
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
@@ -125,19 +128,19 @@ let g:echodoc#enable_at_startup=1
 
 "easymotion
 " <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+map  <Leader><leader>f <Plug>(easymotion-bd-f)
+nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
-nmap <leader>s <Plug>(easymotion-overwin-f2)
+nmap <leader><leader>s <Plug>(easymotion-overwin-f2)
 
 " Move to line
-map <leader>L <Plug>(easymotion-bd-jk)
-nmap <leader>L <Plug>(easymotion-overwin-line)
+map <leader><leader>l <Plug>(easymotion-bd-jk)
+nmap <leader><leader>l <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+map  <Leader><leader>w <Plug>(easymotion-bd-w)
+nmap <Leader><leader>w <Plug>(easymotion-overwin-w)
 
 "asyncrun
 " auto open quickfix window, height = 6
@@ -148,8 +151,8 @@ nnoremap <F10> : call asyncrun#quickfix_toggle(6)<CR>
 " commnent for I barely use cpp for now
 " nnoremap <silent> <F9> : AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
 " nnoremap <silent> <F5> : AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
-nnoremap <silent> <F8> : AsyncRun -cwd=<root> -mode=4 make run <CR>
-nnoremap <silent> <F7> : AsyncRun -cwd=<root> make <CR>
+" nnoremap <silent> <F8> : AsyncRun -cwd=<root> -mode=4 make run <CR>
+nnoremap <silent> <F7> : AsyncRun -cwd=<root> make run<CR>
 
 "vim-latex-live-preview
 autocmd Filetype tex setl updatetime=1
@@ -512,6 +515,7 @@ endif
 " 
 " set textwidth=80 "最大字符长度
 " set formatoptions+=t
+set formatoptions-=t "disable wrap
 " set formatoptions-=l " wrap long lines
 " if v:version > 703 || v:version == 703 && has('patch541')
 "     set formatoptions+=j " Delete comment chars when join comment lines
