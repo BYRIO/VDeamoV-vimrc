@@ -3,6 +3,7 @@ call plug#begin('~/.vim/plugged')
 "                                   Pluglist                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Need attention
+Plug 'takac/vim-hardtime'
 
 " System
 Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
@@ -73,6 +74,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }   " visit github in vim 
+Plug 'junegunn/gv.vim'
 
 " Search
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
@@ -85,18 +87,18 @@ call plug#end()
 " Caution: Mapping should place before PluginConfigure
 
 
-let mapleader=','
+let mapleader=' '
 
 nmap . .`[
 nmap <leader>w :w<CR>
-nmap <leader>q :wq<CR>
+nmap <leader>q :q<CR>
 
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
 
-nnoremap <leader>lc :set list!<CR>                      " quick config to see or not see special character  
-nnoremap <leader>ll :set conceallevel!<CR>              " quick change conceal mode
+" nnoremap <leader>sl :set list!<CR>                    " quick config to see or not see special character  
+nnoremap <leader>ll :set conceallevel=0<CR>             " quick change conceal mode
 
 nnoremap <leader>ev :tabe $MYVIMRC<CR>                  " Quickly edit/reload the vimrc file
 
@@ -123,24 +125,28 @@ if maparg('<C-L>', 'n') ==# ''
 "pathogen
 execute pathogen#infect()
 
+" vim-hardtime
+let g:hardtime_default_on = 1
+let g:hardtime_timeout = 2000
+let g:hardtime_ignore_quickfix = 1
+
 "echodoc
 let g:echodoc#enable_at_startup=1
 
 "easymotion
-" <Leader>f{char} to move to {char}
-map  <Leader><leader>f <Plug>(easymotion-bd-f)
-nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
+map <Leader> <Plug>(easymotion-prefix)
 
 " s{char}{char} to move to {char}{char}
-nmap <leader><leader>s <Plug>(easymotion-overwin-f2)
+nmap <leader>s <Plug>(easymotion-overwin-f2)
 
 " Move to line
-map <leader><leader>l <Plug>(easymotion-bd-jk)
-nmap <leader><leader>l <Plug>(easymotion-overwin-line)
+map L <Plug>(easymotion-bd-jk)
+nmap <leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
-map  <Leader><leader>w <Plug>(easymotion-bd-w)
-nmap <Leader><leader>w <Plug>(easymotion-overwin-w)
+map  W <Plug>(easymotion-bd-w)
+nmap <leader>W <Plug>(easymotion-overwin-w)
+
 
 "asyncrun
 " auto open quickfix window, height = 6
@@ -227,6 +233,7 @@ endif
 
 "Yggdroot/indentLine
 let g:indentLine_enabled=1
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
@@ -271,7 +278,7 @@ let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 "customize python and keymapping
 "ref:https://gist.github.com/lencioni/dff45cd3d1f0e5e23fe6
 "ref:https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-let g:UltiSnipsUsePythonVersion    = 2
+let g:UltiSnipsUsePythonVersion    = 3
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
@@ -305,8 +312,8 @@ let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
-let g:ycm_python_binary_path='/usr/bin/python3'
-let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_python_binary_path='/usr/local/bin/python3'
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
