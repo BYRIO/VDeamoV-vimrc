@@ -13,6 +13,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] }
 Plug 'sgur/vim-textobj-parameter'
+Plug 'michaeljsmith/vim-indent-object'                  " used for align
+Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
 Plug 'Valloric/YouCompleteMe'                           " auto completetion
@@ -31,6 +33,13 @@ Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
 Plug 'skywind3000/asyncrun.vim'                         " Compile
+Plug 'godlygeek/tabular'                                " align text
+Plug 'tpope/vim-surround'                               " change surroundings
+                                                        " c[ange]s[old parttern] [new partten]
+                                                        " ds[partten]
+                                                        " ys(iww)[partten] / yss)
+Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
+Plug 'chxuan/tagbar'                                    " show params and functions
 
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
@@ -54,8 +63,9 @@ Plug 'lervag/vimtex', {'for': ['tex']}                                          
 
 "FileManage
 Plug 'scrooloose/nerdtree'
-Plug 'mhinz/vim-startify'
 Plug 'Xuyuanp/nerdtree-git-Plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 
@@ -66,8 +76,13 @@ Plug 'flazz/vim-colorschemes'
 Plug 'Yggdroot/indentLine'                                                      " Show indent line
 Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
+Plug 'junegunn/vim-slash'                                                       " clean hightline after search
 " Plug 'vim-airline/vim-airline'                                                " It cause tons of lag 
 " Plug 'vim-airline/vim-airline-themes'
+Plug 'therubymug/vim-pyte'                                                      " theme pyte
+Plug 'vim-scripts/mayansmoke'
+" https://github.com/vim-scripts/mayansmoke
+Plug 'vim-scripts/peaksea'
 
 " Github
 Plug 'tpope/vim-fugitive'
@@ -87,7 +102,7 @@ call plug#end()
 " Caution: Mapping should place before PluginConfigure
 
 
-let mapleader=' '
+let mapleader=','
 
 nmap . .`[
 nmap <leader>w :w<CR>
@@ -125,9 +140,21 @@ if maparg('<C-L>', 'n') ==# ''
 "pathogen
 execute pathogen#infect()
 
+" vim-smooth-scroll
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" junegunn/vim-slash
+noremap <plug>(slash-after) zz
+if has('timers')
+  " Blink 2 times with 50ms interval
+  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+endif
+
 " vim-hardtime
-let g:hardtime_default_on = 1
-let g:hardtime_timeout = 2000
+let g:hardtime_default_on = 0
+let g:hardtime_timeout = 500
 let g:hardtime_ignore_quickfix = 1
 
 "echodoc
@@ -498,8 +525,8 @@ set foldmethod=manual
 set foldlevel=99
 set foldlevelstart=99
 
-nnoremap <space> za
-vnoremap <space> zf 
+" nnoremap <space> za
+" vnoremap <space> zf 
 
 let gitroot = substitute(system('git rev-parse --show-toplevel'),'[\n\r]', '', 'g')                          " Make tags placed in .git/tags file available in all levels of a repository
 if gitroot != ''
@@ -831,6 +858,7 @@ autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " colorscheme Tomorrow-Night
 " colorscheme PaperColor
-colorscheme hybrid_material
+" colorscheme hybrid_material
+colorscheme mayansmoke
 " colorscheme anderson
 
