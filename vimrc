@@ -102,7 +102,7 @@ call plug#end()
 " Caution: Mapping should place before PluginConfigure
 
 
-let mapleader=','
+let mapleader=' '
 
 nmap . .`[
 nmap <leader>w :w<CR>
@@ -145,6 +145,7 @@ noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
 " junegunn/vim-slash
 noremap <plug>(slash-after) zz
 if has('timers')
@@ -265,10 +266,13 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
+execute "set <A-p>=\ep"
+execute "set <A-b>=\eb"
+execute "set <A-m>=\eb"
 noremap <c-n> :LeaderfMru<cr>
-noremap π :LeaderfFunction!<cr>
-"noremap ˜ :LeaderfBuffer<cr>
-noremap <m-m> :LeaderfTag<cr>
+noremap <A-p> :LeaderfFunction!<cr>
+noremap <A-b> :LeaderfBuffer<cr>
+noremap <A-m> :LeaderfTag<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -440,7 +444,7 @@ set autoindent                                                          " config
 set smartindent
 set smarttab
 set copyindent
-set tabstop=4  softtabstop=4 shiftwidth=4 expandtab
+set tabstop=2  softtabstop=2 shiftwidth=2 expandtab
 set history=1000                                                        " save 1000 cmd
 set timeoutlen=500                                                      " give u 500 time to react for cmd
 set list                                                                " show the special character
@@ -859,6 +863,9 @@ autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 " colorscheme Tomorrow-Night
 " colorscheme PaperColor
 " colorscheme hybrid_material
-colorscheme mayansmoke
+" colorscheme mayansmoke
 " colorscheme anderson
-
+" colorscheme wombat256
+" colorscheme space-vim-dark
+colorscheme gruvbox
+" colorscheme vividchalk
