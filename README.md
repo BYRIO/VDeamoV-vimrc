@@ -71,7 +71,7 @@ cp ~/.vim/vimrc ~/.vimrc
 Mappings
 --------
 ```bash
-let mapleader=','
+let mapleader=' '
 
 nmap . .`[
 
@@ -114,12 +114,15 @@ Need Additional Configure
 3. ale
 - *You need to ensure you have install the correct lint which you used in the config, such as pylint, autopep8*
 
+4. YouCompleteMe / Utlisnip
+- *Search python to find all the configure for python path, change it to your python path*
+
 
 
 PluginList
 ---------
-```bash
 " Need attention
+Plug 'takac/vim-hardtime'
 
 " System
 Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
@@ -129,6 +132,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] }
 Plug 'sgur/vim-textobj-parameter'
+Plug 'michaeljsmith/vim-indent-object'                  " used for align
+Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
 Plug 'Valloric/YouCompleteMe'                           " auto completetion
@@ -140,13 +145,20 @@ Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-Plug 'sillybun/vim-repl', {'do': './install.sh'}        " python <Leader-w>逐行执行
-Plug 'sillybun/vim-async', {'do': './install.sh'}
-Plug 'sillybun/zytutil'
-Plug 'Shougo/echodoc.vim'                               " 参数提示
+" Plug 'sillybun/vim-repl', {'do': './install.sh'}      " python <Leader-w>逐行执行
+" Plug 'sillybun/vim-async', {'do': './install.sh'}
+" Plug 'sillybun/zytutil'
+Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
 Plug 'skywind3000/asyncrun.vim'                         " Compile
+Plug 'godlygeek/tabular'                                " align text
+Plug 'tpope/vim-surround'                               " change surroundings
+                                                        " c[ange]s[old parttern] [new partten]
+                                                        " ds[partten]
+                                                        " ys(iww)[partten] / yss)
+Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
+Plug 'chxuan/tagbar'                                    " show params and functions
 
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
@@ -170,8 +182,9 @@ Plug 'lervag/vimtex', {'for': ['tex']}                                          
 
 "FileManage
 Plug 'scrooloose/nerdtree'
-Plug 'mhinz/vim-startify'
 Plug 'Xuyuanp/nerdtree-git-Plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 
@@ -182,14 +195,20 @@ Plug 'flazz/vim-colorschemes'
 Plug 'Yggdroot/indentLine'                                                      " Show indent line
 Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
+Plug 'junegunn/vim-slash'                                                       " clean hightline after search
 " Plug 'vim-airline/vim-airline'                                                " It cause tons of lag 
 " Plug 'vim-airline/vim-airline-themes'
+Plug 'therubymug/vim-pyte'                                                      " theme pyte
+Plug 'vim-scripts/mayansmoke'
+" https://github.com/vim-scripts/mayansmoke
+Plug 'vim-scripts/peaksea'
 
 " Github
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }   " visit github in vim 
+Plug 'junegunn/gv.vim'
 
 " Search
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
