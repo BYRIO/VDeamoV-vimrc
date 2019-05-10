@@ -95,6 +95,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
                                                                                 ":%S/{man,dog}/{dog,man}/g 替换man和dog的位置
 Plug 'Yggdroot/LeaderF'                                                         " Ultra search tools
+Plug 'mileszs/ack.vim'                                                          " Use to search pattern in files
 call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Mappings                                   "
@@ -139,6 +140,11 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "pathogen
 execute pathogen#infect()
+
+" ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " vim-smooth-scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
