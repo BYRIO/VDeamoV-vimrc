@@ -117,6 +117,9 @@ Need Additional Configure
 4. YouCompleteMe / Utlisnip
 - *Search python to find all the configure for python path, change it to your python path*
 
+5. ACK
+- Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
+
 
 
 PluginList
