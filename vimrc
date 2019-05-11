@@ -77,6 +77,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
 Plug 'junegunn/vim-slash'                                                       " clean hightline after search
+Plug 'luochen1990/rainbow'                                                      " multi color for Parentheses
 " Plug 'vim-airline/vim-airline'                                                " It cause tons of lag 
 " Plug 'vim-airline/vim-airline-themes'
 Plug 'therubymug/vim-pyte'                                                      " theme pyte
@@ -141,6 +142,9 @@ endif
 "pathogen
 execute pathogen#infect()
 
+" rainbow
+let g:rainbow_active = 1
+
 " ack
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -186,7 +190,7 @@ nmap <leader>W <Plug>(easymotion-overwin-w)
 " auto open quickfix window, height = 6
 let g:asyncrun_open=6
 let g:asyncrun_bell=1
-let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs' , 'build.xml']
+let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs' , 'build.xml', 'Makefile']
 nnoremap <F10> : call asyncrun#quickfix_toggle(6)<CR>
 " commnent for I barely use cpp for now
 " nnoremap <silent> <F9> : AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
@@ -315,7 +319,7 @@ let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 "customize python and keymapping
 "ref:https://gist.github.com/lencioni/dff45cd3d1f0e5e23fe6
 "ref:https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-let g:UltiSnipsUsePythonVersion    = 3
+let g:UltiSnipsUsePythonVersion    = 2
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
@@ -349,8 +353,8 @@ let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
-let g:ycm_python_binary_path='/usr/local/bin/python3'
-let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+let g:ycm_python_binary_path='/usr/bin/python3'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
