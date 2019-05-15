@@ -45,7 +45,6 @@ Plug 'chxuan/tagbar'                                    " show params and functi
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
 Plug 'godlygeek/tabular', {'for': ['markdown']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
-Plug 'mzlogin/vim-kramdown-tab', {'for': ['markdown']}                          "fix for kramdown
 "Use <leader>tab to use
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 " :GenTocGFM/:GenTocRedcarpet
@@ -319,7 +318,7 @@ let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 "customize python and keymapping
 "ref:https://gist.github.com/lencioni/dff45cd3d1f0e5e23fe6
 "ref:https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
-let g:UltiSnipsUsePythonVersion    = 2
+let g:UltiSnipsUsePythonVersion    = 3
 let g:UltiSnipsExpandTrigger       = "<tab>"
 let g:UltiSnipsListSnippets        = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
@@ -353,8 +352,8 @@ let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
-let g:ycm_python_binary_path='/usr/bin/python3'
-let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_python_binary_path='/usr/local/bin/python3'
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
 
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>

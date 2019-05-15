@@ -5,6 +5,7 @@ Vim Installation
 ### For Mac
 ```bash
 brew install vim --with-lua --with-python
+brew install vim # in new version of brew
 pip3 install autopep8
 pip3 install pylint
 ```
