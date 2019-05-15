@@ -489,6 +489,12 @@ set dictionary+=~/.vim/dict/
 set statusline+=%*
 set statusline+=%#warningmsg#
 set shortmess+=filmnrxoOtT                                              " Abbrev. of messages (avoids 'hit enter')
+
+set undofile                                                            " enable undo after close the file
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
 filetype on
 filetype plugin indent on
 
