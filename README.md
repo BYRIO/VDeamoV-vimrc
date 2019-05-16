@@ -117,12 +117,14 @@ Need Additional Configure
 
 4. YouCompleteMe / Utlisnip
 - *Search python to find all the configure for python path, change it to your python path*
+- *add `~/.vim.ycm_extra_conf.py` follow the instructions in [here](https://jonasdevlieghere.com/a-better-youcompleteme-config/)*
 
 5. ACK
 - Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
 
 
 
+```bash
 PluginList
 ---------
 " Need attention
