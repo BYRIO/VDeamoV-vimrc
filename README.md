@@ -1,5 +1,33 @@
 Welcome to MyVimrc
 ==================
+TODO LIST
+--------
+- [ ] Try coc plugin to replce YCM or something else
+
+Special Information
+------------------
+After use neovim for some time, I found neovim is a bit faster than vim, and it 
+support floating window in verison 0.4. So literally, I directly use my vim configure
+for neovim, it works fine.
+
+**ps:** if you DO NOT want use vim config in neovim, just ignore the `ln` command while installing
+
+### NeoVim Installation & vimrc
+```Bash
+# for mac
+brew install neovim
+pip3 install pynvim
+ln -sf ~/.vim ~/.config/nvim
+ln -sf ~/.vimrc ~/.config/nvim/init.vim
+
+# for ubuntu
+sudo apt-get install neovim
+pip3 install pynvim
+ln -sf ~/.vim ~/.config/nvim
+ln -sf ~/.vimrc ~/.config/nvim/init.vim
+```
+
+
 Vim Installation
 ----------------
 ### For Mac

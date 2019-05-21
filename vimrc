@@ -244,6 +244,9 @@ let g:table_mdoe_verbose = 0
 let g:table_mode_auto_align = 0
 "autocmd FileType markdown TableModeEnable
 
+"vim-markdown
+let g:vim_markdown_math=1
+
 "vim-markdown-toc
 let g:vmt_auto_update_on_save=1 "update toc when save
 let g:vmt_dont_insert_fence=0 "if equals to 1, can't update toc when save
@@ -275,13 +278,14 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
-execute "set <A-p>=\ep"
-execute "set <A-b>=\eb"
-execute "set <A-m>=\eb"
+" only need for vim, nvim is not neccessarity
+" execute "set <A-m>=\em,"
+" execute "set <A-b>=\eb"
+" execute "set <A-m>=\em"
 noremap <c-n> :LeaderfMru<cr>
-noremap <A-p> :LeaderfFunction!<cr>
+noremap <A-m> :LeaderfFunction!<cr>
 noremap <A-b> :LeaderfBuffer<cr>
-noremap <A-m> :LeaderfTag<cr>
+" noremap <A-m> :LeaderfTag<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -359,6 +363,7 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
 "跳转到定义处
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 let g:ycm_filetype_blacklist = {
@@ -777,7 +782,9 @@ func! CompileRun()
         exec "!time go run %"
     elseif &filetype == 'markdown'
         exec "!clear"
-        exec "!open -a Typora %"
+        exec "!open -a Marked %"
+    elseif &filetype == 'tex'
+        exec "silent! VimtexCompile &"
     endif
 endfunc
 
@@ -865,6 +872,9 @@ autocmd FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
 autocmd BufNewFile,BufRead *.py,*.cpp,*.java set tabstop=4 |set softtabstop=4|
             \ set shiftwidth=4|set textwidth=79|set expandtab|set autoindent
             \ |set fileformat=unix
+" set auto wrap for tex
+autocmd BufNewFile,BufRead *.tex set textwidth=79 |set fileformat=unix
+            \ | set formatoptions+=t
 
 
 "Let external space be red
