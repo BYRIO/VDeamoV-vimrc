@@ -16,15 +16,25 @@ for neovim, it works fine.
 ```Bash
 # for mac
 brew install neovim
+# `brew install --HEAD neovim` for latest version
 pip3 install pynvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # for ubuntu
+
+sudo apt-add-repository ppa:neovim-ppa/stable
+# if you want to install latest version change `stable` to `unstable`
+sudo apt update
 sudo apt-get install neovim
 pip3 install pynvim
 ln -sf ~/.vim ~/.config/nvim
 ln -sf ~/.vimrc ~/.config/nvim/init.vim
+
+# It is optional to change zsh alias to use vim as nvim
+# put code below in the ~/.zshrc
+alias vim='nvim'
+alias vi='nvim'
 ```
 
 
