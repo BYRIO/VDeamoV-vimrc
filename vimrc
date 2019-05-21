@@ -278,7 +278,6 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 "LeaderF
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
-" only need for vim, nvim is not neccessarity
 " execute "set <A-m>=\em,"
 " execute "set <A-b>=\eb"
 " execute "set <A-m>=\em"
@@ -471,7 +470,14 @@ set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 set switchbuf=useopen                                                   " reveal already opened files from the
                                                                         " quickfix window instead of opening new buffers
 set wildmenu
-set wildmode=list:longest,full
+" set wildmode=list:longest,full
+if has('nvim')                                                          " Use floating windows to complete the commond, only neovim support
+  set wildoptions=pum
+  set termguicolors                                                     " With out this settings, transparable float-win will not work normally
+  set pumblend=10                                                       " Let floatingwindow to be transparable
+elseif
+  set wildmode=list:longest,full                                        " Set list to show completeopt, however it will lead to disfunc for floating windows
+endif
 set nowrap                                                              " Do not wrap long lines
 set whichwrap=b,s,h,l,<,>,>h,[,]                                        " Backspace and cursor keys wrap too
 set t_Co=256                                                            " number of colors
