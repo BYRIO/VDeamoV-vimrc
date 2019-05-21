@@ -2,7 +2,7 @@ Welcome to MyVimrc
 ==================
 TODO LIST
 --------
-- [ ] Try coc plugin to replce YCM or something else
+- [x] Try coc plugin to replce YCM or something else
 
 Special Information
 ------------------
@@ -100,7 +100,7 @@ cp ~/.vim/vimrc ~/.vimrc
     ```bash
     :PlugInstall
     ```
-  - Configure for YCM
+  - Configure for YCM (optional try coc.nvim instead)
     ```bash
     cd ~/.vim/plugged/YouCompleteMe/
     git submodule update --init --recursive
@@ -153,9 +153,8 @@ Need Additional Configure
 3. ale
 - *You need to ensure you have install the correct lint which you used in the config, such as pylint, autopep8*
 
-4. YouCompleteMe / Utlisnip
+4. Utlisnip
 - *Search python to find all the configure for python path, change it to your python path*
-- *add `~/.vim.ycm_extra_conf.py` follow the instructions in [here](https://jonasdevlieghere.com/a-better-youcompleteme-config/)*
 
 5. ACK
 - Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
@@ -258,4 +257,77 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
                                                                                 ":%S/{man,dog}/{dog,man}/g 替换man和dog的位置
 Plug 'Yggdroot/LeaderF'                                                         " Ultra search tools
+```
+
+Old Plugin Configure Backup
+---------------------------
+### YouCompleteMe
+1. *add `~/.vim.ycm_extra_conf.py` follow the instructions in [here](https://jonasdevlieghere.com/a-better-youcompleteme-config/)*
+2. put config below to the vimrc
+```bash
+
+YouCompleteMe
+let g:ycm_min_num_of_chars_for_completion = 2
+"Preview windows settings
+set splitbelow  "set preview window below
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_autoclose_preview_window_after_insertion = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_cache_omnifunc=0
+" 禁止缓存匹配项,每次都重新生成匹配项
+"leave '<tab>', '<c-j>' for ultisnips
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+"leave '<s-tab>', '<c-k>' for ultisnips
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+nnoremap <leader>lo :lopen<CR>
+nnoremap <leader>lc :lclose<CR>
+
+" 开启各种补全引擎
+let g:ycm_auto_trigger = 1                  " 开启 YCM 基于标识符补全，默认为1
+let g:ycm_seed_identifiers_with_syntax=1                " 开启 YCM 基于语法关键字补全
+let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
+let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
+let g:ycm_python_binary_path='/usr/local/bin/python3'
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
+"跳转到定义处
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
+let g:ycm_filetype_blacklist = {
+            \ 'tagbar' : 1,
+            \ 'qf' : 1,
+            \ 'notes' : 1,
+            \ 'markdown' : 1,
+            \ 'unite' : 1,
+            \ 'text' : 1,
+            \ 'vimwiki' : 1,
+            \ 'pandoc' : 1,
+            \ 'infolog' : 1,
+            \ 'mail' : 1
+            \}
+
+let g:ycm_semantic_triggers =  {
+            \ 'c' : ['->', '.'],
+            \ 'objc' : ['->', '.'],
+            \ 'ocaml' : ['.', '#'],
+            \ 'cpp,objcpp' : ['->', '.', '::'],
+            \ 'perl' : ['->'],
+            \ 'php' : ['->', '::'],
+            \ 'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \ 'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+            \ 'ruby' : ['.', '::'],
+            \ 'lua' : ['.', ':'],
+            \ 'erlang' : [':'],
+            \ 'css': ['re!^\s{4}', 're!:\s+'],
+            \ 'html': ['</'],
+            \}
+
 ```

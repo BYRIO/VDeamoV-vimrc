@@ -1,0 +1,20 @@
+{
+  "python.autoComplete.addBrackets": true,
+  "python.jediEnabled": true,
+  "languageserver": {
+    "cquery": {
+          "command": "cquery",
+          "args": ["--log-file=/tmp/cq.log"],
+          "filetypes": ["c", "cpp"],
+          "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+          "initializationOptions": {
+            "cacheDirectory": "/tmp/cquery"
+          }
+        }
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+}

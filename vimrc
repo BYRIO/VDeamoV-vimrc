@@ -17,7 +17,9 @@ Plug 'michaeljsmith/vim-indent-object'                  " used for align
 Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
-Plug 'Valloric/YouCompleteMe'                           " auto completetion
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'Valloric/YouCompleteMe'                           " auto completetion
 Plug 'ludovicchabant/vim-gutentags'                     " auto generate tags
 Plug 'w0rp/ale'                                         " Syntax Check
 Plug 'SirVer/ultisnips'                                 " snippets
@@ -41,11 +43,11 @@ Plug 'tpope/vim-surround'                               " change surroundings
 Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
 Plug 'chxuan/tagbar'                                    " show params and functions
 
+
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
 Plug 'godlygeek/tabular', {'for': ['markdown']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
-"Use <leader>tab to use
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 " :GenTocGFM/:GenTocRedcarpet
 ":UpdateToc 更新目录
@@ -141,6 +143,26 @@ endif
 "pathogen
 execute pathogen#infect()
 
+" coc.nvim
+set shell=/bin/sh
+
+" coc-python
+" Remap key for gotos.
+nmap <leader>jd <Plug>(coc-definition)
+" nmap <leader>gy <Plug>(coc-type-definition)
+" nmap <leader>gi <Plug>(coc-implementation)
+" nmap <leader>gr <Plug>(coc-references)
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 " rainbow
 let g:rainbow_active = 1
 
@@ -171,8 +193,6 @@ let g:hardtime_ignore_quickfix = 1
 let g:echodoc#enable_at_startup=1
 
 "easymotion
-map <Leader> <Plug>(easymotion-prefix)
-
 " s{char}{char} to move to {char}{char}
 nmap <leader>s <Plug>(easymotion-overwin-f2)
 
@@ -303,10 +323,11 @@ let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'cocstatus', 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status'
       \ },
       \ }
 
@@ -330,69 +351,6 @@ let g:snips_author = "VDeamoV"
 let g:snips_email = "vincent.duan95@outlook.com"
 let g:snips_github = "https://github.com/VDeamoV"
 
-"YouCompleteMe
-let g:ycm_min_num_of_chars_for_completion = 2
-"Preview windows settings
-set splitbelow  "set preview window below
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_autoclose_preview_window_after_insertion = 0
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_server_log_level = 'info'
-let g:ycm_cache_omnifunc=0
-" 禁止缓存匹配项,每次都重新生成匹配项
-"leave '<tab>', '<c-j>' for ultisnips
-let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
-"leave '<s-tab>', '<c-k>' for ultisnips
-let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
-nnoremap <leader>lo :lopen<CR>
-nnoremap <leader>lc :lclose<CR>
-
-" 开启各种补全引擎
-let g:ycm_auto_trigger = 1                  " 开启 YCM 基于标识符补全，默认为1
-let g:ycm_seed_identifiers_with_syntax=1                " 开启 YCM 基于语法关键字补全
-let g:ycm_complete_in_comments = 1              " 在注释输入中也能补全
-let g:ycm_complete_in_strings = 1               " 在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_tags_files=1         " 开启 YCM 基于标签引擎
-let g:ycm_python_binary_path='/usr/local/bin/python3'
-let g:ycm_server_python_interpreter='/usr/local/bin/python3'
-
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
-"跳转到定义处
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-let g:ycm_filetype_blacklist = {
-            \ 'tagbar' : 1,
-            \ 'qf' : 1,
-            \ 'notes' : 1,
-            \ 'markdown' : 1,
-            \ 'unite' : 1,
-            \ 'text' : 1,
-            \ 'vimwiki' : 1,
-            \ 'pandoc' : 1,
-            \ 'infolog' : 1,
-            \ 'mail' : 1
-            \}
-
-let g:ycm_semantic_triggers =  {
-            \ 'c' : ['->', '.'],
-            \ 'objc' : ['->', '.'],
-            \ 'ocaml' : ['.', '#'],
-            \ 'cpp,objcpp' : ['->', '.', '::'],
-            \ 'perl' : ['->'],
-            \ 'php' : ['->', '::'],
-            \ 'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \ 'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-            \ 'ruby' : ['.', '::'],
-            \ 'lua' : ['.', ':'],
-            \ 'erlang' : [':'],
-            \ 'css': ['re!^\s{4}', 're!:\s+'],
-            \ 'html': ['</'],
-            \}
 
 "w0rp/ale
 let g:ale_linters_explicit = 1
