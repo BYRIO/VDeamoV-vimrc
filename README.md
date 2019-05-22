@@ -96,8 +96,9 @@ cp ~/.vim/vimrc ~/.vimrc
 2. Install Plugs
   - Check requirements
     ```bash
-    brew install node yarn
+    brew install node
     npm install cnpm -g --registry=https://registry.npm.taobao.org
+    cnpm -g install yarn
     yarn config set registry 'https://registry.npm.taobao.org'
     pip3 install autopep8
     pip3 install pylint
