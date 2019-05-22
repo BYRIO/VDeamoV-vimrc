@@ -18,8 +18,6 @@ Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'Valloric/YouCompleteMe'                           " auto completetion
 Plug 'ludovicchabant/vim-gutentags'                     " auto generate tags
 Plug 'w0rp/ale'                                         " Syntax Check
 Plug 'SirVer/ultisnips'                                 " snippets
@@ -28,9 +26,6 @@ Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-" Plug 'sillybun/vim-repl', {'do': './install.sh'}      " python <Leader-w>逐行执行
-" Plug 'sillybun/vim-async', {'do': './install.sh'}
-" Plug 'sillybun/zytutil'
 Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
@@ -79,8 +74,6 @@ Plug 'bling/vim-bufferline'                                                     
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
 Plug 'junegunn/vim-slash'                                                       " clean hightline after search
 Plug 'luochen1990/rainbow'                                                      " multi color for Parentheses
-" Plug 'vim-airline/vim-airline'                                                " It cause tons of lag 
-" Plug 'vim-airline/vim-airline-themes'
 Plug 'therubymug/vim-pyte'                                                      " theme pyte
 Plug 'vim-scripts/mayansmoke'
 " https://github.com/vim-scripts/mayansmoke
@@ -145,6 +138,9 @@ execute pathogen#infect()
 
 " coc.nvim
 set shell=/bin/sh
+let g:coc_status_error_sign='E'
+let g:coc_status_warning_sign='W'
+
 
 " coc-python
 " Remap key for gotos.

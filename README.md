@@ -96,8 +96,10 @@ cp ~/.vim/vimrc ~/.vimrc
 2. Install Plugs
   - Check requirements
     ```bash
-    brew install node yarn
+    brew install node
+    brew install cquery
     npm install cnpm -g --registry=https://registry.npm.taobao.org
+    cnpm -g install yarn # apt-get install yarn will not work
     yarn config set registry 'https://registry.npm.taobao.org'
     pip3 install autopep8
     pip3 install pylint
@@ -112,6 +114,11 @@ cp ~/.vim/vimrc ~/.vimrc
   - coc for snippets
     ```bash
     :CocInstall coc-ultisnips
+    ```
+
+  - coc-python for python code complete
+    ```bash
+    :CocInstall coc-python
     ```
 
   - Configure for YCM (optional try coc.nvim instead)
@@ -195,7 +202,6 @@ Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'ludovicchabant/vim-gutentags'                     " auto generate tags
 Plug 'w0rp/ale'                                         " Syntax Check
 Plug 'SirVer/ultisnips'                                 " snippets
