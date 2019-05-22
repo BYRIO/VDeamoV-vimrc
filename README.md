@@ -44,8 +44,6 @@ Vim Installation
 ```bash
 brew install vim --with-lua --with-python
 brew install vim # in new version of brew
-pip3 install autopep8
-pip3 install pylint
 ```
 ### For Ubuntu
 1. Install for Prerequisites
@@ -96,16 +94,53 @@ sudo ./install.sh # install fonts for the themes
 cp ~/.vim/vimrc ~/.vimrc
 ```
 2. Install Plugs
+  - Check requirements
+    ```bash
+    brew install node yarn
+    npm install cnpm -g --registry=https://registry.npm.taobao.org
+    yarn config set registry 'https://registry.npm.taobao.org'
+    pip3 install autopep8
+    pip3 install pylint
+    pip3 install jedi
+    ```
+
   - After enter the vim, use the commond below
     ```bash
     :PlugInstall
     ```
+
+  - coc for snippets
+    ```bash
+    :CocInstall coc-ultisnips
+    ```
+
   - Configure for YCM (optional try coc.nvim instead)
     ```bash
     cd ~/.vim/plugged/YouCompleteMe/
     git submodule update --init --recursive
     sudo ./install.py -all
     ```
+
+
+Need Additional Configure
+------------------------
+1. Startify
+- *You need to modify the startify configure in the vimrc*
+
+2. ColorScheme
+- *Search colorscheme in the vimrc to find my configure*
+- *use `:colorscheme` then tab to see other scheme*
+- *`<leader>bg` to change the daymode and nightmode*
+
+3. ale
+- *You need to ensure you have install the correct lint which you used in the config, such as pylint, autopep8*
+
+4. Utlisnip
+- *Search python to find all the configure for python path, change it to your python path*
+- *Utlisnip with coc*, install extension with cmd `:CocInstall coc-ultisnips`
+
+5. ACK
+- Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
 
 Mappings
 --------
@@ -140,30 +175,10 @@ if maparg('<C-L>', 'n') ==# ''
     nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 ```
-Need Additional Configure
-------------------------
-1. Startify
-- *You need to modify the startify configure in the vimrc*
 
-2. ColorScheme
-- *Search colorscheme in the vimrc to find my configure*
-- *use `:colorscheme` then tab to see other scheme*
-- *`<leader>bg` to change the daymode and nightmode*
-
-3. ale
-- *You need to ensure you have install the correct lint which you used in the config, such as pylint, autopep8*
-
-4. Utlisnip
-- *Search python to find all the configure for python path, change it to your python path*
-
-5. ACK
-- Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
-
-
-
-```bash
 PluginList
 ---------
+```bash
 " Need attention
 Plug 'takac/vim-hardtime'
 
@@ -179,7 +194,8 @@ Plug 'michaeljsmith/vim-indent-object'                  " used for align
 Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
 
 " Coding
-Plug 'Valloric/YouCompleteMe'                           " auto completetion
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'ludovicchabant/vim-gutentags'                     " auto generate tags
 Plug 'w0rp/ale'                                         " Syntax Check
 Plug 'SirVer/ultisnips'                                 " snippets
@@ -188,9 +204,6 @@ Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-" Plug 'sillybun/vim-repl', {'do': './install.sh'}      " python <Leader-w>逐行执行
-" Plug 'sillybun/vim-async', {'do': './install.sh'}
-" Plug 'sillybun/zytutil'
 Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
@@ -203,12 +216,11 @@ Plug 'tpope/vim-surround'                               " change surroundings
 Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
 Plug 'chxuan/tagbar'                                    " show params and functions
 
+
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
 Plug 'godlygeek/tabular', {'for': ['markdown']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
-Plug 'mzlogin/vim-kramdown-tab', {'for': ['markdown']}                          "fix for kramdown
-"Use <leader>tab to use
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 " :GenTocGFM/:GenTocRedcarpet
 ":UpdateToc 更新目录
@@ -239,8 +251,7 @@ Plug 'Yggdroot/indentLine'                                                      
 Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
 Plug 'junegunn/vim-slash'                                                       " clean hightline after search
-" Plug 'vim-airline/vim-airline'                                                " It cause tons of lag 
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'luochen1990/rainbow'                                                      " multi color for Parentheses
 Plug 'therubymug/vim-pyte'                                                      " theme pyte
 Plug 'vim-scripts/mayansmoke'
 " https://github.com/vim-scripts/mayansmoke
@@ -257,6 +268,7 @@ Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
                                                                                 ":%S/{man,dog}/{dog,man}/g 替换man和dog的位置
 Plug 'Yggdroot/LeaderF'                                                         " Ultra search tools
+Plug 'mileszs/ack.vim'                                                          " Use to search pattern in files
 ```
 
 Old Plugin Configure Backup
