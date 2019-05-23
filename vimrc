@@ -25,6 +25,7 @@ Plug 'VDeamoV/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
+Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
 Plug 'Shougo/echodoc.vim'                               " U will like it
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}

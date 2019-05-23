@@ -121,6 +121,14 @@ cp ~/.vim/vimrc ~/.vimrc
     :CocInstall coc-python
     ```
 
+  - coc-java for java code complete
+    ```bash
+    :CocInstall coc-java
+    ```
+    For in China, download jdt.ls directly in plugin will be extremely slow.
+    Try download in the offical website [here](http://download.eclipse.org/jdtls/milestones/?d), then place them in the path
+    `~/.config/coc/extension/coc-java-data/server`
+
   - Configure for YCM (optional try coc.nvim instead)
     ```bash
     cd ~/.vim/plugged/YouCompleteMe/
