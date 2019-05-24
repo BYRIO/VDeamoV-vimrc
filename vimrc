@@ -6,7 +6,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'takac/vim-hardtime'
 
 " System
-Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
+" Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
 Plug 'vim-scripts/LargeFile'                            " Fast Load for Large files
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
@@ -27,7 +27,7 @@ Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能�
                                                         " 补全括号 shift+tab出来
 Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-Plug 'Shougo/echodoc.vim'                               " U will like it
+Plug 'andymass/vim-matchup'                             " extence
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
 Plug 'skywind3000/asyncrun.vim'                         " Compile
@@ -38,7 +38,6 @@ Plug 'tpope/vim-surround'                               " change surroundings
                                                         " ys(iww)[partten] / yss)
 Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
 Plug 'chxuan/tagbar'                                    " show params and functions
-
 
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
@@ -137,6 +136,7 @@ endif
 "pathogen
 execute pathogen#infect()
 
+
 " coc.nvim
 set shell=/bin/sh
 let g:coc_status_error_sign='E'
@@ -186,9 +186,6 @@ let g:hardtime_default_on = 0
 let g:hardtime_timeout = 500
 let g:hardtime_ignore_quickfix = 1
 
-"echodoc
-let g:echodoc#enable_at_startup=1
-
 "easymotion
 " s{char}{char} to move to {char}{char}
 nmap <leader>s <Plug>(easymotion-overwin-f2)
@@ -207,7 +204,7 @@ nmap <leader>W <Plug>(easymotion-overwin-w)
 let g:asyncrun_open=6
 let g:asyncrun_bell=1
 let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs' , 'build.xml', 'Makefile']
-nnoremap <F10> : call asyncrun#quickfix_toggle(6)<CR>
+nnoremap <F10> : call asyncrun#quickfix_toggle(10)<CR>
 " commnent for I barely use cpp for now
 " nnoremap <silent> <F9> : AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
 " nnoremap <silent> <F5> : AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <CR>
@@ -372,7 +369,7 @@ let g:ale_linters = {
 \   'c': ['gcc', 'cpplint'],
 \   'java': ['javac','google-java-format'],
 \}
-
+let g:ale_go_langserver_executable = 'gopls'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines','trim_whitespace' ],
 \   'python': ['autopep8']
@@ -733,7 +730,7 @@ func! CompileRun()
         exec "!clear"
         exec "!time bash %"
     elseif &filetype == 'python'
-        exec "!clear && python3 %"
+        exec "!python3 %"
 
     elseif &filetype == 'html'
         exec "!open -a Safari % &"
