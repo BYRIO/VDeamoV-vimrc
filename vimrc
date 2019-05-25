@@ -1,7 +1,21 @@
-call plug#begin('~/.vim/plugged')
+""""""""""""""""""""""""
+"  Check for vim-plug  "
+""""""""""""""""""""""""
+" Check for vim-plug if not exist download it
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  augroup vimplug
+    au!
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup END
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Pluglist                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin('~/.vim/plugged')
+
 " Need attention
 Plug 'takac/vim-hardtime'
 
@@ -124,6 +138,7 @@ nnoremap <leader>tq :tabclose<CR>
 
 " use ]+space create spaceline
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 " Use <C-L> to clear the highlighting of :set hlsearch
 if maparg('<C-L>', 'n') ==# ''
