@@ -1,4 +1,3 @@
-""""""""""""""""""""""""
 "  Check for vim-plug  "
 """"""""""""""""""""""""
 " Check for vim-plug if not exist download it
@@ -29,6 +28,7 @@ Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] 
 Plug 'sgur/vim-textobj-parameter'
 Plug 'michaeljsmith/vim-indent-object'                  " used for align
 Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
+Plug 'tpope/vim-obsession'
 
 " Coding
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
@@ -99,6 +99,7 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }   " visit github in vim 
 Plug 'junegunn/gv.vim'
+Plug 'airblade/vim-gitgutter'                                                   " [c ]c jump to prev/next change [C ]C
 
 " Search
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
@@ -151,9 +152,37 @@ endif
 "pathogen
 execute pathogen#infect()
 
+" tpope/vim-obsession
+" :Obsession ~/.vim/obsessions/
+" :source ~/.vim/obsessions/Session.vim
+command! -bang Sesh call Sesh(<bang>0)
+function! Sesh(bang)
+  let l:file = $HOME . '/.vim/obsessions/Session.vim'
+  let l:isTracking = !empty(ObsessionStatus('tracking', '')) " true for both off and pused
+
+  if (a:bang) " replace persisted session
+    if (l:isTracking)
+      Obsession!
+    endif
+    if (filereadable(l:file))
+      call delete(l:file)
+    endif
+    exec 'Obsession ' . l:file
+  else " restore session if possible or start tracking current
+    if (!l:isTracking)
+      if (filereadable(l:file))
+        exec 'source ' . l:file
+      else
+        exec 'Obsession ' . l:file
+      endif
+    else
+      echom 'already tracking'
+    endif
+  endif
+endfunction
 
 " coc.nvim
-set shell=/bin/sh
+set shell=/bin/zsh
 let g:coc_status_error_sign='E'
 let g:coc_status_warning_sign='W'
 
@@ -331,20 +360,125 @@ let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \   'left': [ 
+      \     [ 'mode', 'paste' ],
+      \     [ 'filename', 'modified' ],
+      \     [ 'gitbranch', 'git_changes' ],
+      \     [ 'cocstatus' ]
+      \   ],
+      \   'right': [
+      \     ['lineinfo'],
+      \     ['percent'],
+      \     ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'],
+      \     ['obsession'],
+      \   ]
       \ },
       \ 'component_function': {
+      \   'match_count': 'MatchCountStatusline',
+      \   'obsession':  'LightlineObsessionStatus',
       \   'gitbranch': 'fugitive#head',
+      \   'git_changes': 'LightLineChanges',
       \   'cocstatus': 'coc#status'
       \ },
-      \ }
+      \ 'component_expand': {
+      \     'linter_warnings': 'LightlineLinterWarnings',
+      \     'linter_errors':   'LightlineLinterErrors',
+      \     'linter_ok':       'LightlineLinterOK',
+      \   },
+      \   'component_type': {
+      \     'readonly':        'error',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors':   'error'
+      \   },
+      \   'separator': {
+      \     'left': '',
+      \     'right': ''
+      \   },
+      \   'enable': {
+      \     'statusline': 1,
+      \     'tabline': 0
+      \   }
+    \ }
+
+function! LightlineObsessionStatus()
+  if exists('*ObsessionStatus')
+    return ObsessionStatus('session', 'session paused')
+  endif
+endfunction
+
+function! LightLineChanges()
+  let l:hunkSummary = v:null
+  if exists('*GitGutterGetHunkSummary')
+    let l:hunkSummary = GitGutterGetHunkSummary()
+  elseif exists('g:loaded_signify') && sy#buffer_is_active()
+    let l:hunkSummary = sy#repo#get_stats()
+  endif
+  if (empty(l:hunkSummary))
+    return ''
+  else
+    let [ l:added, l:modified, l:removed ] = l:hunkSummary
+    let l:total = (l:added + l:modified + l:removed)
+    let l:output = ''
+    if (l:added != 0)
+      let l:output .= printf('+%d ', l:added)
+    endif
+    if (l:modified != 0)
+      let l:output .= printf('~%d ', l:modified)
+    endif
+    if (l:removed != 0)
+      let l:output .= printf('-%d ', l:removed)
+    endif
+    return '(' . l:output . ')'
+  endif
+endfunction
+
+function! LightlineLinterWarnings() abort
+  if (&readonly)
+    return ''
+  endif
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:all_non_errors == 0 ? '' : printf('%d ▲', l:all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+  if (&readonly)
+    return ''
+  endif
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:all_errors == 0 ? '' : printf('%d ✗', l:all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+  if (&readonly)
+    return ''
+  endif
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓' : ''
+endfunction
+
+augroup ale_stuff
+  au!
+  autocmd User ALELint call s:MaybeUpdateLightline()
+augroup END
+
+function! s:MaybeUpdateLightline()
+  " Update and show lightline but only if it's visible (e.g., not in Goyo)
+  if exists('#lightline')
+    call lightline#update()
+  end
+endfunction
 
 
 "vim-xkbswitch
-let g:XkbSwitchEnabled     = 1
-let g:XkbSwitchIMappings   = ['cn']
-let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
+" let g:XkbSwitchEnabled     = 1
+" let g:XkbSwitchIMappings   = ['cn']
+" let g:XkbSwitchIMappingsTr = {'cn': {'<': '', '>': ''}}
 
 
 "SirVer/ultisnips
@@ -732,10 +866,9 @@ map <leader>r :call CompileRun()<CR>
 func! CompileRun()
     exec "w"
     if &filetype == 'c'
-        exec "!clear && g++ % -o %<"
-        exec "!time ./%<"
+        exec "g++ % -o %<"
     elseif &filetype == 'cpp'
-        exec "!clear && g++ % -o %<"
+        exec "g++ % -o %<"
         exec "!time ./%<"
     elseif &filetype == 'java'
         exec "!clear"
