@@ -39,7 +39,7 @@ Plug 'VDeamoV/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
-Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
+" Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
 Plug 'andymass/vim-matchup'                             " extence
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
@@ -84,7 +84,6 @@ Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'itchyny/lightline.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'Yggdroot/indentLine'                                                      " Show indent line
-Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
 Plug 'junegunn/vim-slash'                                                       " clean hightline after search
 Plug 'luochen1990/rainbow'                                                      " multi color for Parentheses
@@ -92,6 +91,7 @@ Plug 'therubymug/vim-pyte'                                                      
 Plug 'vim-scripts/mayansmoke'
 " https://github.com/vim-scripts/mayansmoke
 Plug 'vim-scripts/peaksea'
+Plug 'haishanh/night-owl.vim'
 
 " Github
 Plug 'tpope/vim-fugitive'
@@ -213,10 +213,11 @@ if executable('ag')
 endif
 
 " vim-smooth-scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" Distance Duration Speed
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 8, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 8, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
 
 " junegunn/vim-slash
 noremap <plug>(slash-after) zz
@@ -571,11 +572,13 @@ set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 set switchbuf=useopen                                                   " reveal already opened files from the
                                                                         " quickfix window instead of opening new buffers
 set wildmenu
+set cursorcolumn                                                        " highlight column
+set cursorline                                                          " highlight row
 " set wildmode=list:longest,full
 if has('nvim')                                                          " Use floating windows to complete the commond, only neovim support
   set wildoptions=pum
   set termguicolors                                                     " With out this settings, transparable float-win will not work normally
-  set pumblend=10                                                       " Let floatingwindow to be transparable
+  set pumblend=30                                                       " Let floatingwindow to be transparable
 elseif
   set wildmode=list:longest,full                                        " Set list to show completeopt, however it will lead to disfunc for floating windows
 endif
@@ -921,6 +924,21 @@ autocmd! BufNewFile,BufRead *.bat
             \ if getline(1) =~ '--\*-Perl-\*--' | setf perl | endif
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    Themes                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" should be placed before AutoCMD, or some color configure will not avaliable
+" colorscheme Tomorrow-Night
+" colorscheme PaperColor
+" colorscheme hybrid_material
+" colorscheme mayansmoke
+" colorscheme anderson
+" colorscheme wombat256
+" colorscheme space-vim-dark
+colorscheme gruvbox
+" colorscheme vividchalk
+" colorscheme night-owl
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  AutoCMD                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -982,21 +1000,7 @@ autocmd BufNewFile,BufRead *.py,*.cpp,*.java set tabstop=4 |set softtabstop=4|
 autocmd BufNewFile,BufRead *.tex set textwidth=79 |set fileformat=unix
             \ | set formatoptions+=t
 
-
 "Let external space be red
 highlight BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
 autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                    Themes                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" colorscheme Tomorrow-Night
-" colorscheme PaperColor
-" colorscheme hybrid_material
-" colorscheme mayansmoke
-" colorscheme anderson
-" colorscheme wombat256
-" colorscheme space-vim-dark
-colorscheme gruvbox
-" colorscheme vividchalk
