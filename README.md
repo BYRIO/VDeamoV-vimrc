@@ -1,8 +1,24 @@
 Welcome to MyVimrc
 ==================
+<!-- vim-markdown-toc GitLab -->
+
+* [TODO LIST](#todo-list)
+* [Special Information](#special-information)
+  * [NeoVim Installation & vimrc](#neovim-installation-vimrc)
+* [Vim Installation](#vim-installation)
+  * [For Mac](#for-mac)
+  * [For Ubuntu](#for-ubuntu)
+* [PluginInstall](#plugininstall)
+* [Need Additional Configure](#need-additional-configure)
+* [Mappings](#mappings)
+* [PluginList](#pluginlist)
+* [Old Plugin Configure Backup](#old-plugin-configure-backup)
+  * [YouCompleteMe](#youcompleteme)
+
+<!-- vim-markdown-toc -->
 TODO LIST
 --------
-- [x] Try coc plugin to replce YCM or something else
+- [ ] Try to find auto delete brackets
 
 Special Information
 ------------------
@@ -13,6 +29,7 @@ for neovim, it works fine.
 **ps:** if you DO NOT want use vim config in neovim, just ignore the `ln` command while installing
 
 ### NeoVim Installation & vimrc
+
 ```Bash
 # for mac
 brew install neovim
@@ -23,8 +40,7 @@ ln -sf ~/.vimrc ~/.config/nvim/init.vim
 
 # for ubuntu
 
-sudo apt-add-repository ppa:neovim-ppa/stable
-# if you want to install latest version change `stable` to `unstable`
+sudo apt-add-repository ppa:neovim-ppa/stable # if you want to install latest version change `stable` to `unstable`
 sudo apt update
 sudo apt-get install neovim
 pip3 install pynvim
@@ -157,19 +173,24 @@ Need Additional Configure
 5. ACK
 - Need to install [the_silver_searcher](https://github.com/ggreer/the_silver_searcher) manually 
 
+6. KeyMappings(Only for Mac User)
+- map [options] to [ESC+]
+
 Mappings
 --------
 ```bash
 let mapleader=' '
 
 nmap . .`[
+nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
+
 
 nnoremap <Leader>eg :e ++enc=gbk<CR>
 nnoremap <Leader>eu :e ++enc=utf8<CR>
 
-nnoremap <leader>l :set list!<CR>                       " quick config to see or not see special character  
+" nnoremap <leader>sl :set list!<CR>                    " quick config to see or not see special character  
 nnoremap <leader>ll :set conceallevel=0<CR>             " quick change conceal mode
-nnoremap <leader>lc :set conceallevel=1<CR>
 
 nnoremap <leader>ev :tabe $MYVIMRC<CR>                  " Quickly edit/reload the vimrc file
 
@@ -184,6 +205,10 @@ nnoremap <leader>tq :tabclose<CR>
 
 " use ]+space create spaceline
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
+" use c+[ to exit term to normal mode
+tnoremap <c-[> <c-\><c-n>
 
 " Use <C-L> to clear the highlighting of :set hlsearch
 if maparg('<C-L>', 'n') ==# ''
@@ -198,7 +223,7 @@ PluginList
 Plug 'takac/vim-hardtime'
 
 " System
-Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
+" Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
 Plug 'vim-scripts/LargeFile'                            " Fast Load for Large files
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
@@ -207,6 +232,7 @@ Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java', 'python'] 
 Plug 'sgur/vim-textobj-parameter'
 Plug 'michaeljsmith/vim-indent-object'                  " used for align
 Plug 'terryma/vim-smooth-scroll'                        " smooth scroll
+Plug 'tpope/vim-obsession'
 
 " Coding
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
@@ -217,8 +243,9 @@ Plug 'VDeamoV/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
+" Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
-Plug 'Shougo/echodoc.vim'                               " U will like it
+Plug 'andymass/vim-matchup'                             " extence
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'easymotion/vim-easymotion'                        " trigger with <leader><leader>+s/w/gE
 Plug 'skywind3000/asyncrun.vim'                         " Compile
@@ -229,7 +256,6 @@ Plug 'tpope/vim-surround'                               " change surroundings
                                                         " ys(iww)[partten] / yss)
 Plug 'tpope/vim-repeat'                                 " for use . to repeat for surround
 Plug 'chxuan/tagbar'                                    " show params and functions
-
 
 " Writing Blog
 Plug 'hotoo/pangu.vim', {'for': ['markdown']}                                   "to make your document better
@@ -262,7 +288,6 @@ Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'itchyny/lightline.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'Yggdroot/indentLine'                                                      " Show indent line
-Plug 'bling/vim-bufferline'                                                     " 为打开的文件有一个快捷栏
 Plug 'kshenoy/vim-signature'                                                    " Visible Mark
 Plug 'junegunn/vim-slash'                                                       " clean hightline after search
 Plug 'luochen1990/rainbow'                                                      " multi color for Parentheses
@@ -270,6 +295,7 @@ Plug 'therubymug/vim-pyte'                                                      
 Plug 'vim-scripts/mayansmoke'
 " https://github.com/vim-scripts/mayansmoke
 Plug 'vim-scripts/peaksea'
+Plug 'haishanh/night-owl.vim'
 
 " Github
 Plug 'tpope/vim-fugitive'
@@ -277,6 +303,7 @@ Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }   " visit github in vim 
 Plug 'junegunn/gv.vim'
+Plug 'airblade/vim-gitgutter'                                                   " [c ]c jump to prev/next change [C ]C
 
 " Search
 Plug 'tpope/vim-abolish'                                                        "增强版的substitue
