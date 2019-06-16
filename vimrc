@@ -19,7 +19,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'takac/vim-hardtime'
 
 " System
-" Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
+Plug 'neoclide/coc-imselect'                            " need install im-select
 Plug 'vim-scripts/LargeFile'                            " Fast Load for Large files
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
@@ -39,7 +39,7 @@ Plug 'VDeamoV/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
-" Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
+Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
 Plug 'andymass/vim-matchup'                             " extence
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
