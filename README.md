@@ -2,24 +2,16 @@ Welcome to MyVimrc
 ==================
 <!-- vim-markdown-toc GitLab -->
 
-* [TODO LIST](#todo-list)
-* [Special Information](#special-information)
-  * [NeoVim Installation & vimrc](#neovim-installation-vimrc)
-* [Vim Installation](#vim-installation)
-  * [For Mac](#for-mac)
-  * [For Ubuntu](#for-ubuntu)
-* [PluginInstall](#plugininstall)
-* [Need Additional Configure](#need-additional-configure)
-* [Mappings](#mappings)
-* [PluginList](#pluginlist)
-* [Old Plugin Configure Backup](#old-plugin-configure-backup)
-  * [YouCompleteMe](#youcompleteme)
+  * [Special Information](#special-information)
+    * [NeoVim Installation & vimrc](#neovim-installation-vimrc)
+* [for mac](#for-mac)
+* [`brew install --HEAD neovim` for latest version](#brew-install-head-neovim-for-latest-version)
+* [for ubuntu](#for-ubuntu)
+* [It is optional to change zsh alias to use vim as nvim](#it-is-optional-to-change-zsh-alias-to-use-vim-as-nvim)
+* [put code below in the ~/.zshrc](#put-code-below-in-the-zshrc)
+* [check if there is + in front of the lua and python](#check-if-there-is-in-front-of-the-lua-and-python)
 
 <!-- vim-markdown-toc -->
-TODO LIST
---------
-- [ ] Try to find auto delete brackets
-
 Special Information
 ------------------
 After use neovim for some time, I found neovim is a bit faster than vim, and it 
@@ -30,7 +22,6 @@ for neovim, it works fine.
 
 ### NeoVim Installation & vimrc
 
-```Bash
 # for mac
 brew install neovim
 # `brew install --HEAD neovim` for latest version
@@ -153,6 +144,7 @@ cp ~/.vim/vimrc ~/.vimrc
     ```
 
 
+
 Need Additional Configure
 ------------------------
 1. Startify
@@ -175,6 +167,11 @@ Need Additional Configure
 
 6. KeyMappings(Only for Mac User)
 - map [options] to [ESC+]
+
+7. coc-imselect
+You need to install im-select first. 
+- Find script [here](https://github.com/daipeihust/im-select) and install it.
+- Use command `im-select` to check your default English input method (optional)
 
 Mappings
 --------
@@ -223,7 +220,7 @@ PluginList
 Plug 'takac/vim-hardtime'
 
 " System
-" Plug 'lyokha/vim-xkbswitch', {'as': 'xkbswitch'}        " fix for cn change en
+Plug 'neoclide/coc-imselect'                            " need install im-select
 Plug 'vim-scripts/LargeFile'                            " Fast Load for Large files
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
@@ -243,7 +240,7 @@ Plug 'VDeamoV/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'                             " Brackets Jump 智能补全括号和跳转
                                                         " 补全括号 shift+tab出来
-" Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
+Plug 'jiangmiao/auto-pairs'                             " insert or delete pairs
 Plug 'vim-scripts/matchit.zip'                          " %  g% [% ]% a%
 Plug 'andymass/vim-matchup'                             " extence
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
