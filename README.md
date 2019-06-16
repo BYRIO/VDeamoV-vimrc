@@ -2,16 +2,20 @@ Welcome to MyVimrc
 ==================
 <!-- vim-markdown-toc GitLab -->
 
-  * [Special Information](#special-information)
-    * [NeoVim Installation & vimrc](#neovim-installation-vimrc)
-* [for mac](#for-mac)
-* [`brew install --HEAD neovim` for latest version](#brew-install-head-neovim-for-latest-version)
-* [for ubuntu](#for-ubuntu)
-* [It is optional to change zsh alias to use vim as nvim](#it-is-optional-to-change-zsh-alias-to-use-vim-as-nvim)
-* [put code below in the ~/.zshrc](#put-code-below-in-the-zshrc)
-* [check if there is + in front of the lua and python](#check-if-there-is-in-front-of-the-lua-and-python)
+* [Special Information](#special-information)
+  * [NeoVim Installation & vimrc](#neovim-installation-vimrc)
+* [Vim Installation](#vim-installation)
+  * [For Mac](#for-mac)
+  * [For Ubuntu](#for-ubuntu)
+* [PluginInstall](#plugininstall)
+* [Need Additional Configure](#need-additional-configure)
+* [Mappings](#mappings)
+* [PluginList](#pluginlist)
+* [Old Plugin Configure Backup](#old-plugin-configure-backup)
+  * [YouCompleteMe](#youcompleteme)
 
 <!-- vim-markdown-toc -->
+
 Special Information
 ------------------
 After use neovim for some time, I found neovim is a bit faster than vim, and it 
@@ -22,6 +26,7 @@ for neovim, it works fine.
 
 ### NeoVim Installation & vimrc
 
+```Bash
 # for mac
 brew install neovim
 # `brew install --HEAD neovim` for latest version
